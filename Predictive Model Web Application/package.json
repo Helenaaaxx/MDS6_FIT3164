@@ -14,8 +14,8 @@
   "scripts": {
     "watch": "npm-watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "",
-    "dev": "concurrently \"live-server src --port=8080\" \"npm run watch\""
+    "build": "postcss src/styles.css -o src/styles.css",
+    "dev": "\"live-server src --port=8080\" \"npm run watch\""
   },
   "keywords": [],
   "author": "",
