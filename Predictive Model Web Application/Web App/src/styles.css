@@ -1,0 +1,120 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, button, input, textarea {
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h1, p {
+  text-align: center;
+  color: #333;
+}
+
+h1 {
+  margin-bottom: 0.5em;
+}
+
+p {
+  margin-bottom: 2em;
+}
+
+.drop-box {
+  border: 2px dashed #007bff;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  text-align: center;
+  color: #007bff;
+  cursor: pointer;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.drop-box:hover {
+  background-color: #e9e9e9;
+}
+
+.drop-box input[type="file"] {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:active {
+  transform: translateY(2px);
+}
+
+#predictionResult {
+  background-color: #e9e9e9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  display: none; /* Hidden by default, shown after generation */
+}
+
+#predictionResult h2 {
+  margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+textarea#notes {
+  width: 100%;
+  height: 150px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 20px;
+  resize: vertical; /* Allow vertical resizing */
+}
