@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DRUGRES Predictive Model</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <img src="logo.png" alt="DRUGRES Logo" id="logo">
+    <h1>DRUGRES</h1>
+    <p class="subtitle">A tool for predicting drug resistance in cancer cell lines using machine learning approaches</p>
+  </header>
+
+  <main class="main-content">
+    <!-- Additional sections for model selection, file upload, etc., go here -->
+    <section id="predictionSection">
+      <button id="gdscButton">GDSC2 - RMA</button>
+      <button id="smilesButton">SMILES</button>
+      <button id="ccleButton">CCLE</button>
+      <input type="text" id="cancerTypeInput" placeholder="Enter Cancer Type">
+      <button id="makePredictionButton">Make Prediction</button>
+      <button id="uploadDataButton" onclick="document.getElementById('fileInput').click();">Upload Data</button>
+      <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-off
+      icedocument.spreadsheetml.sheet" hidden>
+    </section>
+
+    <section id="fileUploadSection">
+      <!-- File upload instructions and drop box will go here -->
+      <div class="drop-area">
+        <p class="file-upload-instructions">Drop CSV/Excel file here or click to upload</p>
+        <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>
+        <div class="drop-box" onclick="document.getElementById('fileInput').click();">
+          <span>+</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="resultsSection">
+      <h2>Prediction Result:</h2>
+      <p>Estimated Prediction Accuracy: <span id="accuracy">98.35%</span></p>
+      <!-- Results will be displayed here after prediction -->
+      <div id="resultsPreview"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2024 DRUGRES. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
