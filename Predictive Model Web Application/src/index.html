@@ -4,51 +4,113 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DRUGRES Predictive Model</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <!-- Import pure.css -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="header">
-    <img src="logo.png" alt="DRUGRES Logo" id="logo">
+  <!-- <header class="header">
+    
     <h1>DRUGRES</h1>
     <p class="subtitle">A tool for predicting drug resistance in cancer cell lines using machine learning approaches</p>
-  </header>
+  </header> -->
 
   <main class="main-content">
     <!-- Additional sections for model selection, file upload, etc., go here -->
-    <section id="predictionSection">
+    <!-- <section id="predictionSection1">
       <button id="gdscButton">GDSC2 - RMA</button>
       <button id="smilesButton">SMILES</button>
       <button id="ccleButton">CCLE</button>
       <input type="text" id="cancerTypeInput" placeholder="Enter Cancer Type">
-      <button id="makePredictionButton">Make Prediction</button>
       <button id="uploadDataButton" onclick="document.getElementById('fileInput').click();">Upload Data</button>
       <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-off
       icedocument.spreadsheetml.sheet" hidden>
-    </section>
+    </section> -->
 
+        <section>
+          <div class = "mainDivider">
+            <h1 class = 'bigMainTitle'> &nbsp; DRUGRES</h1>
+            <p class="subTitle" id="c-align" >A tool for prediting drug resistance in cancer cell lines using machine learning approaches <br> Visualisation by: MDS6</p>
+         
+      </div>
+        </section>
     <section id="fileUploadSection">
       <!-- File upload instructions and drop box will go here -->
       <div class="drop-area">
-        <p class="file-upload-instructions">Drop CSV/Excel file here or click to upload</p>
+        <p class="file-upload-instructions"><img src="upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">Drop and Upload Dataset in CSV file for Prediction</p>
         <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>
-        <div class="drop-box" onclick="document.getElementById('fileInput').click();">
-          <span>+</span>
+        <button class="drop-box" onclick="document.getElementById('fileInput').click();">Browse File</button>
+          <!-- <span>+</span> -->
         </div>
       </div>
     </section>
 
-    <section id="resultsSection">
-      <h2>Prediction Result:</h2>
-      <p>Estimated Prediction Accuracy: <span id="accuracy">98.35%</span></p>
+    <section id="predictionSection">
+      <div id="predictionDiv">
+        <button id="makePredictionButton">Make Prediction</button>
+      </div>
+    </section>
+
+    <section class="labelSection" id="resultsLabelSection">
+      <h2 class="label" id="predictionLabel">Prediction Result</h2>
+      <!-- <p>Estimated Prediction Accuracy: <span id="accuracy">98.35%</span></p> -->
       <!-- Results will be displayed here after prediction -->
       <div id="resultsPreview"></div>
     </section>
-  </main>
 
-  <footer class="footer">
-    <p>&copy; 2024 DRUGRES. All rights reserved.</p>
+    <section>
+      <div id="filterDiv">
+        <div><p id="filterLabel">Filter by : </p></div>
+        <button class="filter" id="cosmicFilter">Cosmic ID</button>
+        <button class="filter" id="cellNameFilter">Cell Line Name</button>
+        <button class="filter" id="drugIdFilter">Drug ID</button>
+        <button class="filter" id="drugNameFilter">Drug Name</button>
+      </div>
+      <div id="exportDiv">
+        <button id="exportBtn">Export</button>
+      </div>
+
+      <div id="table-container">
+        <table>
+
+        </table>
+
+      </div>
+
+      <div>
+        <p id="loss">Prediction Loss:</p>
+      </div>
+    </section>
+    <section class="labelSection" id="predictionOutput">
+      <h2 class="label" id="predictionOutputLabel">Prediction Output Visualisation</h2>
+      <!-- <p>Estimated Prediction Accuracy: <span id="accuracy">98.35%</span></p> -->
+      <!-- Results will be displayed here after prediction -->
+      
+    </section>
+  </main>
+<!-- visualisation container -->
+  <section id="OutputVisSection">
+    <div id="OutputVis"></div>
+  </section>
+
+  <!-- <section class="labelSection" id="defaultDatasetLabelSection">
+    <h2 class="label" id="defaultDatasetLabel">Default Drug-Cell Dataset</h2>
+    <!-- <p>Estimated Prediction Accuracy: <span id="accuracy">98.35%</span></p> -->
+    <!-- Results will be displayed here after prediction -->
+    
+  <!--</section> -->
+
+  <footer class="mainDivider">
+    <p class="footer">&copy; 2024 DRUGRES. All rights reserved. <br>
+      Published by: Monash University FIT3164 - MDS6<br>
+      Prepared by: Helena Tam, Yu Mei Ng, Muhammad Azhar Ali Boolaky
+      </p>
+
+    
   </footer>
 
-  <script src="script.js"></script>
+  <script src="web.js"></script>
 </body>
 </html>
