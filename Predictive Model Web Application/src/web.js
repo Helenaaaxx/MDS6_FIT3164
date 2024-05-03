@@ -1,46 +1,49 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const fileInput = document.getElementById('fileInput');
-  const clearButton = document.getElementById('clearButton');
-  const submitButton = document.getElementById('submitButton');
-  const dropBox = document.getElementById('fileUploadSection');
-  const output = document.getElementById('resultsPreview');
+  // const fileInput = document.getElementById('fileInput');
+  // const clearButton = document.getElementById('clearButton');
+  // const submitButton = document.getElementById('submitButton');
+  // const dropBox = document.getElementById('fileUploadSection');
+  // const output = document.getElementById('resultsPreview');
 
-  dropBox.addEventListener('click', () => fileInput.click());
+  // dropBox.addEventListener('click', () => fileInput.click());
 
-  fileInput.addEventListener('change', handleFiles);
+  // fileInput.addEventListener('change', handleFiles);
 
-  dropBox.addEventListener('dragover', (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
-  });
+  // dropBox.addEventListener('dragover', (e) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   e.dataTransfer.dropEffect = 'copy';
+  // });
 
-  dropBox.addEventListener('drop', (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    const files = e.dataTransfer.files;
-    fileInput.files = files;
-    handleFiles();
-  });
+  // dropBox.addEventListener('drop', (e) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   const files = e.dataTransfer.files;
+  //   fileInput.files = files;
+  //   handleFiles();
+  // });
 
-  clearButton.addEventListener('click', () => {
-    fileInput.value = '';
-    output.innerHTML = '';
-  });
+  // // clearButton.addEventListener('click', () => {
+  // //   fileInput.value = '';
+  // //   output.innerHTML = '';
+  // // });
 
-  submitButton.addEventListener('click', () => {
-    if (fileInput.files.length) {
-      output.innerHTML = '<p>Processing files...</p>';
-      // Implement the file processing and prediction logic here
-    } else {
-      alert('Please select a file to submit.');
-    }
-  });
+  // submitButton.addEventListener('click', () => {
+  //   if (fileInput.files.length) {
+  //     output.innerHTML = '<p>Processing files...</p>';
+  //     // Implement the file processing and prediction logic here
+  //   } else {
+  //     alert('Please select a file to submit.');
+  //   }
+  // });
 
-  function handleFiles() {
-    const files = fileInput.files;
-    // Implement file handling logic here
-  }
+  // function handleFiles() {
+  //   const files = fileInput.files;
+  //   // Implement file handling logic here
+  // }
+
+
+
 });
 // Continue from the existing script.js content
 // Add any specific logic for buttons and file handling
@@ -57,105 +60,130 @@ document.getElementById('makePredictionButton').addEventListener('click', functi
 
 
 
-  (function(){
-    var DELIMETER =',';
-    var NEWLINE='\n';
-    var filePath ="preprocessed_datasets/Drug_Breast_Cancer_Dataset.csv";
-    var filename = filePath.split('/').pop();
-    var file = new File([filename], filePath, { type: "csv" });
-    var i = document.getElementById("file");
-    var table = document.getElementById('table-container');
-  
-    if(!i){
+(function() {
+  var DELIMITER = ',';
+  var NEWLINE = '\n';
+  var filePath = "Drug_Breast_Cancer_Data.csv";
+  var table = document.getElementById('drug-table');
+
+  if (!table) {
       return;
-    }
+  }
 
-    i.addEventListener("change", function (){
-      if(!!i.files && i.files.length >0){
-        parseCSV(i.files[0]);
+  fetch(filePath)
+      .then(response => response.text())
+      .then(text => {
+          toTable(text);
+      })
+      .catch(error => console.error('Error fetching file:', error));
 
-      }
-    });
-
-    function parseCSV(file){
-      if(!file || !FileReader){
-        return;
-      }
-
-      var reader = new FileReader();
-
-      reader.onload =  function(e){
-
-        toTable(e.target.result);
-      }
-
-      reader.readAsText(file);
-
-    }
-
-    function toTable(text){
-
-      if(!text || ! table){
-        return;
-      }
-
-      while(!!table.lastElementChild){
-        table.removeChild(table.lastElementChild);
+  function toTable(text) {
+      if (!text) {
+          return;
       }
 
       var rows = text.split(NEWLINE);
-      var headers =  rows.shift().trim().split(DELIMETER);
+      var tableHTML = '<thead><tr>';
+      var headers = rows.shift().trim().split(DELIMITER);
+      headers.forEach(function(header, index) {
+          var trimmedHeader = header.trim();
+          if (trimmedHeader) {
+            if (index === headers.length - 1) {
+            
+              tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn" onclick="queue()"> <i class="fa fa-sort"></i></button></th>';
+          } else {
+              tableHTML += '<th>' + trimmedHeader + '</th>';
+          }
+          }
+      });
+      
+      tableHTML += '</tr></thead><tbody>';
 
-      var htr = document.createElement('tr');
-      headers.forEach(function (h) {
-        
-          var th = document.createElement('th');
-          var ht = h.trim();
-        
-
-        if(!ht){
-          return;
-        }
-
-        th.textContent = ht;
-        htr.appendChild(th);
-        
+      rows.forEach(function(row) {
+          var trimmedRow = row.trim();
+          if (trimmedRow) {
+              var cols = trimmedRow.split(DELIMITER);
+              tableHTML += '<tr>';
+              cols.forEach(function(col) {
+                  var trimmedCol = col.trim();
+                  tableHTML += '<td>' + trimmedCol + '</td>';
+              });
+              tableHTML += '</tr>';
+          }
       });
 
-      table.appendChild(htr);
+      tableHTML += '</tbody>';
+      table.innerHTML = '<table>' + tableHTML + '</table>';
+  }
+})();
 
-      var rtr;
 
-      rows.forEach(function (r){
-
-        r= r.trim();
-
-        if(!r){
-          return;
-        }
-
-        var cols = r.split(DELIMETER);
-
-        if(cols.length ===0){
-          return;
-        }
-
-        rtr = document.createElement('tr');
-
-        cols.forEach(function (c){
-          var td = document.createElement('td');
-          var tc = c.trim();
-
-          td.textContent = tc;
-          rtr.appendChild(td);
-
-        });
-        table.appendChild(rtr);
-      });
-
-    }
+exportBtn.addEventListener("click", function() {
     
-  })();
+  var table = document.getElementById("drug-table");
+  
+    
+    var csv = [];
+    var rows = table.rows;
+  
+    for (var i = 0; i < rows.length; i++) {
+      var row = [], cols = rows[i].cells;
+      for (var j = 0; j < cols.length; j++) {
+        row.push(cols[j].innerText);
+      }
+      csv.push(row.join(","));
+    }
+    csv = csv.join("\n");
+
+  
+  var blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+
+ 
+  var link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "Drug_Breast_Cancer_Data.csv";
+
+  
+  link.click();
+});
+
+var isAscending = 1;
+
+function queue(){
+  isAscending+=1;
+  var table = document.getElementById("drug-table");
+  if (!table) {
+      console.error("Table not found.");
+      return;
+  }
+
+  
+  var index = 4; 
+
+  
+  var rows = Array.from(table.rows);
+  rows.shift();
+
+ 
+  rows.sort(function(row1, row2) {
+      var value1 = row1.cells[index].textContent.trim();
+      var value2 = row2.cells[index].textContent.trim();
+      if(isAscending%2 ===0){
+        
+        return value1.localeCompare(value2);
+      }
+      else{
+        return value2.localeCompare(value1);
+      }
+      
+  });
+
+  
+  var tbody = table.querySelector("tbody");
+  rows.forEach(function(row) {
+      tbody.appendChild(row);
+  });
+};
 
 
 
