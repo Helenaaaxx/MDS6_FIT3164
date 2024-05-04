@@ -1,8 +1,21 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, jsonify, request 
+from werkzeug.utils import secure_filename
 import csv
 import os
 
 app = Flask(__name__)
+UPLOAD_FOLDER = 'C:/Users/Ali Azhar/Documents/DrugRes/MDS6_FIT3164/Predictive Model Web Application/src/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+@app.route('/upload', methods=['POST'])
+def file_upload():
+    file = request.files['file']
+    if file:
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return jsonify({'filename': filename})
+    return jsonify({'error': 'No file uploaded'})
 
 # Route to serve the CSV file directly
 @app.route('/Drug_Breast_Cancer_Data.csv')

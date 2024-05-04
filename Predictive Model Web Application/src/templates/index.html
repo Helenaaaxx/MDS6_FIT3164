@@ -20,7 +20,7 @@
 
   <main class="main-content">
     <!-- Additional sections for model selection, file upload, etc., go here -->
-    <section id="predictionSection1">
+    <!-- <section id="predictionSection1">
       <button id="gdscButton">GDSC2 - RMA</button>
       <button id="smilesButton">SMILES</button>
       <button id="ccleButton">CCLE</button>
@@ -28,7 +28,7 @@
       <button id="uploadDataButton" onclick="document.getElementById('fileInput').click();">Upload Data</button>
       <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-off
       icedocument.spreadsheetml.sheet" hidden>
-    </section>
+    </section> -->
 
         <section>
           <div class = "mainDivider">
@@ -53,13 +53,14 @@
 
 
     <section id="fileUploadSection">
-      <!-- File upload instructions and drop box will go here -->
       <div class="drop-area">
-        <p class="file-upload-instructions"><img src="/static/images/upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">Drop and Upload Dataset in CSV file for Prediction</p>
+        <p class="file-upload-instructions">
+          <img src="/static/images/upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">
+          Drop and Upload Dataset in CSV file for Prediction
+        </p>
         <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>
         <button class="drop-box" onclick="document.getElementById('fileInput').click();">Browse File</button>
-          <!-- <span>+</span> -->
-        </div>
+        <p id="uploadedFileName"></p> <!-- Placeholder for displaying uploaded file name -->
       </div>
     </section>
 
@@ -142,5 +143,63 @@
 
     
   </footer>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function(){
+        var dropArea = $('#fileUploadSection .drop-area');
+  
+        // Prevent default drag behaviors
+        dropArea.on('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).addClass('dragging');
+        });
+  
+        // Remove highlight when dragging out
+        dropArea.on('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('dragging');
+        });
+  
+        // Handle dropped files
+        dropArea.on('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('dragging');
+  
+            var files = e.originalEvent.dataTransfer.files;
+            uploadFiles(files);
+        });
+  
+        // Handle file selection via input
+        $('#fileInput').change(function() {
+            uploadFiles(this.files);
+        });
+  
+        // Function to upload files
+        function uploadFiles(files) {
+            var file = files[0]; // If multiple files are selected, handle them here or adjust as needed
+            var formData = new FormData();
+            formData.append('file', file);
+  
+            $.ajax({
+                url: '/upload',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    $('#uploadedFileName').text('Uploaded File: ' + data.filename); // Adjust this if handling multiple files
+                },
+                error: function() {
+                    $('#uploadedFileName').text('Failed to upload file.');
+                }
+            });
+        }
+    });
+    </script>
+
 </body>
 </html>
