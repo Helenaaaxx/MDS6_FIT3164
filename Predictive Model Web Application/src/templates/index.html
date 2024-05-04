@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Import pure.css -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
   <!-- <header class="header">
@@ -20,7 +20,7 @@
 
   <main class="main-content">
     <!-- Additional sections for model selection, file upload, etc., go here -->
-    <!-- <section id="predictionSection1">
+    <section id="predictionSection1">
       <button id="gdscButton">GDSC2 - RMA</button>
       <button id="smilesButton">SMILES</button>
       <button id="ccleButton">CCLE</button>
@@ -28,7 +28,7 @@
       <button id="uploadDataButton" onclick="document.getElementById('fileInput').click();">Upload Data</button>
       <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-off
       icedocument.spreadsheetml.sheet" hidden>
-    </section> -->
+    </section>
 
         <section>
           <div class = "mainDivider">
@@ -46,7 +46,7 @@
         <p>This website is a tool where you can drag and drop your datasets on drugs and cancer cell lines in order to make prediction on the drug resistance on the cancer cell lines.</p>
       </div>
       <div id="cancerPosition">
-        <img src="red_cancer.png" alt="cancer-cell">
+        <img src="/static/images/red_cancer.png" alt="cancer-cell">
       </div>
       </div>
     </section>
@@ -55,7 +55,7 @@
     <section id="fileUploadSection">
       <!-- File upload instructions and drop box will go here -->
       <div class="drop-area">
-        <p class="file-upload-instructions"><img src="upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">Drop and Upload Dataset in CSV file for Prediction</p>
+        <p class="file-upload-instructions"><img src="/static/images/upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">Drop and Upload Dataset in CSV file for Prediction</p>
         <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>
         <button class="drop-box" onclick="document.getElementById('fileInput').click();">Browse File</button>
           <!-- <span>+</span> -->
@@ -90,11 +90,27 @@
 
       <div id="table-container">
         <table id="drug-table">
-
+          <thead>
+            <tr>
+              {% if data %}
+                {% for header in data[0] %}
+                  <th>{{ header }}</th>
+                {% endfor %}
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in data[1:] %}
+              <tr>
+                {% for cell in row %}
+                  <td>{{ cell }}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
         </table>
-
       </div>
-
+      
       <div>
         <p id="loss">Prediction Loss:</p>
       </div>
@@ -126,7 +142,5 @@
 
     
   </footer>
-
-  <script src="web.js"></script>
 </body>
 </html>
