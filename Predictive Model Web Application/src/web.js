@@ -23,24 +23,24 @@ document.addEventListener('DOMContentLoaded', () => {
   //   handleFiles();
   // });
 
-  // // clearButton.addEventListener('click', () => {
-  // //   fileInput.value = '';
-  // //   output.innerHTML = '';
+  // // // clearButton.addEventListener('click', () => {
+  // // //   fileInput.value = '';
+  // // //   output.innerHTML = '';
+  // // // });
+
+  // // submitButton.addEventListener('click', () => {
+  // //   if (fileInput.files.length) {
+  // //     output.innerHTML = '<p>Processing files...</p>';
+  // //     // Implement the file processing and prediction logic here
+  // //   } else {
+  // //     alert('Please select a file to submit.');
+  // //   }
   // // });
 
-  // submitButton.addEventListener('click', () => {
-  //   if (fileInput.files.length) {
-  //     output.innerHTML = '<p>Processing files...</p>';
-  //     // Implement the file processing and prediction logic here
-  //   } else {
-  //     alert('Please select a file to submit.');
-  //   }
-  // });
-
-  // function handleFiles() {
-  //   const files = fileInput.files;
-  //   // Implement file handling logic here
-  // }
+  // // function handleFiles() {
+  // //   const files = fileInput.files;
+  // //   // Implement file handling logic here
+  // // }
 
 
 
@@ -49,16 +49,41 @@ document.addEventListener('DOMContentLoaded', () => {
 // Add any specific logic for buttons and file handling
 // The detailed implementation will depend on your application's backend and logic
 
-document.getElementById('makePredictionButton').addEventListener('click', function() {
-  // Trigger the prediction process
-  // Fetch the input value
-  var cancerType = document.getElementById('cancerTypeInput').value;
-  // Use cancerType to make a prediction, likely involving an API call or another form of data processing
-  // Then update the prediction results and accuracy
-});
+// document.getElementById('makePredictionButton').addEventListener('click', function() {
+//   // Trigger the prediction process
+//   // Fetch the input value
+//   var cancerType = document.getElementById('cancerTypeInput').value;
+//   // Use cancerType to make a prediction, likely involving an API call or another form of data processing
+//   // Then update the prediction results and accuracy
+// });
 
 
+function defaultButton(){
+  var fileUploadSec = document.getElementById("fileUploadSection");
+  var predictionSec = document.getElementById('predictionSection');
+  var visualLabel= document.getElementById("predictionOutputLabel");
+  var predictionLabel = document.getElementById('predictionLabel');
 
+  fileUploadSec.innerHTML = '<div style="height:0px;">'+'</div>';
+  predictionSec.innerHTML= '<div style="height:0px;">'+'</div>';
+  predictionLabel.textContent="Default GDSC-CCLE Drug-Cell line sensitivity dataset";
+  visualLabel.textContent = "Default GDSC-CCLE Drug-Cell Sensitivity Visualisation";
+
+}
+
+function manualtButton(){
+  var fileUploadSec = document.getElementById("fileUploadSection");
+  var predictionSec = document.getElementById('predictionSection');
+  var visualLabel= document.getElementById("predictionOutputLabel");
+  var predictionLabel = document.getElementById('predictionLabel');
+  fileUploadSec.innerHTML = '<div class="drop-area">'+'<p class="file-upload-instructions">'+'<img src="upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">'+
+  'Drop and Upload Dataset in CSV file for Prediction</p>'+'<input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>'
+  '<button class="drop-box" onclick="document.getElementById("fileInput").click();">'+'Browse File</button>'+'</div>'+'</div>';
+  predictionSec.innerHTML= ' <div id="predictionDiv">'+' <button id="makePredictionButton">Make Prediction</button>'+'';
+
+  predictionLabel.textContent="Prediction result";
+  visualLabel.textContent = "Prediction output Visualisation";
+}
 
 (function() {
   var DELIMITER = ',';
@@ -88,11 +113,20 @@ document.getElementById('makePredictionButton').addEventListener('click', functi
       headers.forEach(function(header, index) {
           var trimmedHeader = header.trim();
           if (trimmedHeader) {
-            if (index === headers.length - 1) {
+            if (index === 0) {
             
               tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn" onclick="queue()"> <i class="fa fa-sort"></i></button></th>';
-          } else {
-              tableHTML += '<th>' + trimmedHeader + '</th>';
+          } else if(index === 1){
+            tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn1" onclick="queue1()"> <i class="fa fa-sort"></i></button></th>';
+          }
+          else if(index === 2){
+            tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn2" onclick="queue2()"> <i class="fa fa-sort"></i></button></th>';
+          }
+          else if(index === 3){
+            tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn3" onclick="queue3()"> <i class="fa fa-sort"></i></button></th>';
+          }
+          else if(index === headers.length - 1){
+            tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn4" onclick="queue4()"> <i class="fa fa-sort"></i></button></th>';
           }
           }
       });
@@ -158,7 +192,7 @@ function queue(){
   }
 
   
-  var index = 4; 
+  var index = 0; 
 
   
   var rows = Array.from(table.rows);
@@ -186,6 +220,156 @@ function queue(){
 };
 
 
+var isAscending1 = 1;
+
+function queue1(){
+  isAscending1+=1;
+  var table = document.getElementById("drug-table");
+  if (!table) {
+      console.error("Table not found.");
+      return;
+  }
 
   
+  var index = 1; 
 
+  
+  var rows = Array.from(table.rows);
+  rows.shift();
+
+ 
+  rows.sort(function(row1, row2) {
+      var value1 = row1.cells[index].textContent.trim();
+      var value2 = row2.cells[index].textContent.trim();
+      if(isAscending1%2 ===0){
+        
+        return value1.localeCompare(value2);
+      }
+      else{
+        return value2.localeCompare(value1);
+      }
+      
+  });
+
+  
+  var tbody = table.querySelector("tbody");
+  rows.forEach(function(row) {
+      tbody.appendChild(row);
+  });
+};
+
+
+var isAscending2 = 1;
+
+function queue2(){
+  isAscending2+=1;
+  var table = document.getElementById("drug-table");
+  if (!table) {
+      console.error("Table not found.");
+      return;
+  }
+
+  
+  var index = 2; 
+
+  
+  var rows = Array.from(table.rows);
+  rows.shift();
+
+ 
+  rows.sort(function(row1, row2) {
+      var value1 = row1.cells[index].textContent.trim();
+      var value2 = row2.cells[index].textContent.trim();
+      if(isAscending2%2 ===0){
+        
+        return value1.localeCompare(value2);
+      }
+      else{
+        return value2.localeCompare(value1);
+      }
+      
+  });
+
+  
+  var tbody = table.querySelector("tbody");
+  rows.forEach(function(row) {
+      tbody.appendChild(row);
+  });
+};
+  
+
+var isAscending3 = 1;
+
+function queue3(){
+  isAscending3+=1;
+  var table = document.getElementById("drug-table");
+  if (!table) {
+      console.error("Table not found.");
+      return;
+  }
+
+  
+  var index = 3; 
+
+  
+  var rows = Array.from(table.rows);
+  rows.shift();
+
+ 
+  rows.sort(function(row1, row2) {
+      var value1 = row1.cells[index].textContent.trim();
+      var value2 = row2.cells[index].textContent.trim();
+      if(isAscending3%2 ===0){
+        
+        return value1.localeCompare(value2);
+      }
+      else{
+        return value2.localeCompare(value1);
+      }
+      
+  });
+
+  
+  var tbody = table.querySelector("tbody");
+  rows.forEach(function(row) {
+      tbody.appendChild(row);
+  });
+};
+
+var isAscending4 = 1;
+
+function queue4(){
+  isAscending4+=1;
+  var table = document.getElementById("drug-table");
+  if (!table) {
+      console.error("Table not found.");
+      return;
+  }
+
+  
+  var index = 4; 
+
+  
+  var rows = Array.from(table.rows);
+  rows.shift();
+
+ 
+  rows.sort(function(row1, row2) {
+      var value1 = row1.cells[index].textContent.trim();
+      var value2 = row2.cells[index].textContent.trim();
+      if(isAscending4%2 ===0){
+        
+        return value1.localeCompare(value2);
+      }
+      else{
+        return value2.localeCompare(value1);
+      }
+      
+  });
+
+  
+  var tbody = table.querySelector("tbody");
+  rows.forEach(function(row) {
+      tbody.appendChild(row);
+  });
+};

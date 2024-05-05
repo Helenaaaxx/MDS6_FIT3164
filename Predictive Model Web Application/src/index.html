@@ -51,26 +51,44 @@
       </div>
     </section>
 
+    <div class="labelDiv" id="mainLabelDiv">
+      <h2 class="mainLabel" id="mainLabel">Drug-Cell Line Sensitivity</h2>
+      <!-- <p>Estimated Prediction Accuracy: <span id="accuracy">98.35%</span></p> -->
+      <!-- Results will be displayed here after prediction -->
+      
+    </div>
+
+   <section id="second-part">
+
+    <p>Please select manual user prediction or default drug-sensitivity:</p>
+    <div id="buttonsDiv">
+
+      <button class="mainButton" onclick="manualtButton()">User Manual Prediction</button>
+      <button class="mainButton" onclick="defaultButton()">Default Dataset</button>
+
+    </div>
+   </section>
+
 
     <section id="fileUploadSection">
       <!-- File upload instructions and drop box will go here -->
-      <div class="drop-area">
+      <!-- <div class="drop-area">
         <p class="file-upload-instructions"><img src="upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">Drop and Upload Dataset in CSV file for Prediction</p>
         <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>
-        <button class="drop-box" onclick="document.getElementById('fileInput').click();">Browse File</button>
+        <button class="drop-box" onclick="document.getElementById('fileInput').click();">Browse File</button> -->
           <!-- <span>+</span> -->
-        </div>
-      </div>
+        <!-- </div>
+      </div> -->
     </section>
 
     <section id="predictionSection">
-      <div id="predictionDiv">
+      <!-- <div id="predictionDiv">
         <button id="makePredictionButton">Make Prediction</button>
-      </div>
+      </div> -->
     </section>
 
     <section class="labelSection" id="resultsLabelSection">
-      <h2 class="label" id="predictionLabel">Prediction Result</h2>
+      <h2 class="label" id="predictionLabel">Default GDSC-CCLE Drug-Cell line sensitivity dataset</h2>
       <!-- <p>Estimated Prediction Accuracy: <span id="accuracy">98.35%</span></p> -->
       <!-- Results will be displayed here after prediction -->
       <div id="resultsPreview"></div>
@@ -95,12 +113,12 @@
 
       </div>
 
-      <div>
+      <!-- <div>
         <p id="loss">Prediction Loss:</p>
-      </div>
+      </div> -->
     </section>
     <section class="labelSection" id="predictionOutput">
-      <h2 class="label" id="predictionOutputLabel">Prediction Output Visualisation</h2>
+      <h2 class="label" id="predictionOutputLabel">Default GDSC-CCLE Drug-Cell Sensitivity Visualisation</h2>
       <!-- <p>Estimated Prediction Accuracy: <span id="accuracy">98.35%</span></p> -->
       <!-- Results will be displayed here after prediction -->
       

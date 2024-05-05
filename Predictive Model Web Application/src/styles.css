@@ -67,6 +67,28 @@ body *{
     font-size: 18px;
     font-weight: 700
 }
+
+#second-part p{
+    font-size: 20px;
+    text-align: left;
+}
+
+#second-part #buttonsDiv{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.mainButton{
+    background-color: #732D45;
+    color: white;
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
  
 
 #fileUploadSection{
@@ -103,19 +125,16 @@ body *{
 }
 
 
-#predictionSection{
-    padding-top: 20px;
-    padding-bottom: 20px;
+
+#predictionDiv{
     border-style: solid;
     border-width: 2px;
     border-color: black;
-    
-}
-
-#predictionDiv{
+    padding-top: 20px;
+    padding-bottom: 20px;
     display: flex;
     justify-content: center;
-    width: 100%;
+    
 }
 
 #makePredictionButton{
@@ -130,6 +149,22 @@ body *{
     text-align: center;
     border-radius: 10px;
      
+}
+
+#mainLabelDiv{
+    background-color: #732D45;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+}
+
+#mainLabel{
+    color: white;
+    text-align: center;
+    margin: -1px;
+    font-size: 25px;
 }
 
 
@@ -181,6 +216,7 @@ body *{
 #table-container{
     display: flex;
     justify-content: center;
+    padding-bottom: 50px;
 }
 
 table{
@@ -224,8 +260,8 @@ th, td{
       
 }
 
-#sortBtn{
-    margin-left: 15px;
+table button{
+    margin-left: 5px;
 }
 
 
