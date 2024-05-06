@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Import pure.css -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/Predictive Model Web Application/src/static/css/styles.css">
 </head>
 <body>
   <!-- <header class="header">
@@ -46,7 +46,7 @@
         <p>This website is a tool where you can drag and drop your datasets on drugs and cancer cell lines in order to make prediction on the drug resistance on the cancer cell lines.</p>
       </div>
       <div id="cancerPosition">
-        <img src="red_cancer.png" alt="cancer-cell">
+        <img src="/Predictive Model Web Application/src/static/images/red_cancer.png" alt="cancer-cell">
       </div>
       </div>
     </section>
@@ -69,16 +69,16 @@
     </div>
    </section>
 
-
     <section id="fileUploadSection">
-      <!-- File upload instructions and drop box will go here -->
       <!-- <div class="drop-area">
-        <p class="file-upload-instructions"><img src="upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">Drop and Upload Dataset in CSV file for Prediction</p>
+        <p class="file-upload-instructions">
+          <img src="/Predictive Model Web Application/src/static/images/upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">
+          Drop and Upload Dataset in CSV file for Prediction
+        </p>
         <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>
-        <button class="drop-box" onclick="document.getElementById('fileInput').click();">Browse File</button> -->
-          <!-- <span>+</span> -->
-        <!-- </div>
-      </div> -->
+        <button class="drop-box" onclick="document.getElementById('fileInput').click();">Browse File</button>
+        <p id="uploadedFileName"></p>  Placeholder for displaying uploaded file name -->
+      <!-- </div> -->
     </section>
 
     <section id="predictionSection">
@@ -108,11 +108,27 @@
 
       <div id="table-container">
         <table id="drug-table">
-
+          <thead>
+            <tr>
+              {% if data %}
+                {% for header in data[0] %}
+                  <th>{{ header }}</th>
+                {% endfor %}
+              {% endif %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in data[1:] %}
+              <tr>
+                {% for cell in row %}
+                  <td>{{ cell }}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
         </table>
-
       </div>
-
+      
       <!-- <div>
         <p id="loss">Prediction Loss:</p>
       </div> -->
@@ -145,6 +161,64 @@
     
   </footer>
 
-  <script src="web.js"></script>
+  <script src="/Predictive Model Web Application/src/web.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function(){
+        var dropArea = $('#fileUploadSection .drop-area');
+  
+        // Prevent default drag behaviors
+        dropArea.on('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).addClass('dragging');
+        });
+  
+        // Remove highlight when dragging out
+        dropArea.on('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('dragging');
+        });
+  
+        // Handle dropped files
+        dropArea.on('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('dragging');
+  
+            var files = e.originalEvent.dataTransfer.files;
+            uploadFiles(files);
+        });
+  
+        // Handle file selection via input
+        $('#fileInput').change(function() {
+            uploadFiles(this.files);
+        });
+  
+        // Function to upload files
+        function uploadFiles(files) {
+            var file = files[0]; // If multiple files are selected, handle them here or adjust as needed
+            var formData = new FormData();
+            formData.append('file', file);
+  
+            $.ajax({
+                url: '/upload',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    $('#uploadedFileName').text('Uploaded File: ' + data.filename); // Adjust this if handling multiple files
+                },
+                error: function() {
+                    $('#uploadedFileName').text('Failed to upload file.');
+                }
+            });
+        }
+    });
+    </script>
+    
+
 </body>
 </html>

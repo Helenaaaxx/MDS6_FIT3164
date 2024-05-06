@@ -76,10 +76,10 @@ function manualtButton(){
   var predictionSec = document.getElementById('predictionSection');
   var visualLabel= document.getElementById("predictionOutputLabel");
   var predictionLabel = document.getElementById('predictionLabel');
-  fileUploadSec.innerHTML = '<div class="drop-area">'+'<p class="file-upload-instructions">'+'<img src="upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">'+
-  'Drop and Upload Dataset in CSV file for Prediction</p>'+'<input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>'
-  '<button class="drop-box" onclick="document.getElementById("fileInput").click();">'+'Browse File</button>'+'</div>'+'</div>';
-  predictionSec.innerHTML= ' <div id="predictionDiv">'+' <button id="makePredictionButton">Make Prediction</button>'+'';
+  fileUploadSec.innerHTML = '<div class="drop-area">'+'<p class="file-upload-instructions">'+'<img src="/Predictive Model Web Application/src/static/images/upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">'+
+  'Drop and Upload Dataset in CSV file for Prediction</p>'+'<input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>'+
+  '<button class="drop-box" onclick=onclick="document.getElementById("fileInput").click();">Browse File</button>'+'<p id="uploadedFileName"></p>'+'</div>';
+  predictionSec.innerHTML= ' <div id="predictionDiv">'+' <button id="makePredictionButton">Make Prediction</button>'+'</div>';
 
   predictionLabel.textContent="Prediction result";
   visualLabel.textContent = "Prediction output Visualisation";
@@ -88,8 +88,8 @@ function manualtButton(){
 (function() {
   var DELIMITER = ',';
   var NEWLINE = '\n';
-  var filePath = "Drug_Breast_Cancer_Data.csv";
-  var table = document.getElementById('drug-table');
+  var filePath = "/Predictive Model Web Application/src/uploads/Drug_Breast_Cancer_Data.csv";
+  var table = document.getElementById('table-container');
 
   if (!table) {
       return;
@@ -147,7 +147,7 @@ function manualtButton(){
       });
 
       tableHTML += '</tbody>';
-      table.innerHTML = '<table>' + tableHTML + '</table>';
+      table.innerHTML = '<table id="drug-table">' + tableHTML + '</table>';
   }
 })();
 

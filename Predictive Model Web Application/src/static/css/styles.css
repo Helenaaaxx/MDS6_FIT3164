@@ -1,0 +1,310 @@
+body *{
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+
+.mainDivider {
+    background-color: rgb(64, 29, 34);
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    
+  }
+
+  .bigMainTitle{
+    font-weight: 1000;
+    color:rgb(250, 248, 245);
+    font-size: 28px;
+    text-align: center;
+    margin-top: -1px;
+  }
+
+  .subTitle {
+    text-align: center;
+    font-size: 15px;
+    color:azure;
+    margin-top:-20px;
+  }
+
+#first-part{
+    display: flex;
+    justify-content: center;
+}
+
+#first-inner{
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+}
+
+
+#left-part{
+
+    width: 40%;
+
+  }
+
+#userGuidelineBtnDiv{
+
+    display: flex;
+    justify-content: center;
+}
+
+#userGuidelineBtn{
+    background-color: gray;
+    color: white;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 15px;
+    font-weight: bold;
+
+}
+
+#left-part p{
+    font-size: 18px;
+    font-weight: 700
+}
+
+#second-part p{
+    font-size: 20px;
+    text-align: left;
+}
+
+#second-part #buttonsDiv{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.mainButton{
+    background-color: #732D45;
+    color: white;
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+ 
+
+#fileUploadSection{
+    background-color: gray;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 15px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    
+}
+
+.drop-area{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.file-upload-instructions{
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    
+}
+
+.drop-box{
+    margin-top: 15px;
+    height: fit-content;
+    font-size: 15px;
+    font-weight: 700;
+    color: black;
+    background-color: white;
+}
+
+
+
+#predictionDiv{
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    
+}
+
+#makePredictionButton{
+    background-color: gray;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 25px;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 10px;
+     
+}
+
+#mainLabelDiv{
+    background-color: #732D45;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+}
+
+#mainLabel{
+    color: white;
+    text-align: center;
+    margin: -1px;
+    font-size: 25px;
+}
+
+
+
+.labelSection{
+    
+    background-color: #F1ECDE;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+   
+}
+
+.label{
+    color: #732D45;
+    text-align: center;
+    margin: -1px;
+    font-size: 25px;
+}
+
+
+.filter{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 13px;
+    font-size: 20px;
+    background-color: #D3D3D3;
+    color: black;
+    border-radius: 10px;
+
+}
+
+#filterLabel{
+    font-size: 20px;
+    margin: -1px;
+    padding-bottom: 6px;
+}
+
+#filterDiv{
+    margin-top: 40px;
+    display: inline-block;
+}
+
+
+#table-container{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+table{
+    overflow-y: scroll;
+    display: block;
+    height: 500px;
+    border: solid;
+    border-width: 1px;
+    border-color: black;
+    table-layout: fixed;
+    width: 70% ;
+}
+
+table th{
+    font-weight: bold;
+    font-size: 25px;
+    text-align: left;
+    
+    
+    
+}
+
+td:last-child, th:last-child{
+    background-color: antiquewhite;
+}
+
+table td{   
+    font-size: 20px;
+    width: 20%;
+}
+
+th, td{
+
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 30px;
+    padding-right: 40px;
+    border: solid;
+    border-width:1px;
+    border-color: black;
+      
+}
+
+table button{
+    margin-left: 5px;
+}
+
+
+#exportBtn{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 15px;
+    background-color: gray;
+    color: white;
+    border-radius: 5px;
+    
+} 
+
+#exportDiv{
+    padding-top: 20px;
+    display: flex;
+    justify-content: end;
+}
+
+#loss{
+    font-size: 25px;
+    color: #732D45;
+    font-weight: 700;
+}
+
+#OutputVisSection{
+
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+
+.footer {
+    text-align: center;
+    font-size: 15px;
+    color:azure;
+    
+  }
+
+
+
+
+
+
