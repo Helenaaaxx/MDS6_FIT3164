@@ -8,25 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
-  <!-- CSS file -->
-  <link rel="stylesheet" href="/Predictive Model Web Application/src/static/css/styles.css">
-
-  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
-
   <!-- Import pure.css -->
-  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
-  integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Google font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
   <!-- <header class="header">
@@ -59,11 +42,11 @@
       <div id="first-inner">
         <div id="left-part">
           <p>For understanding how to use our web application tool properly, please direct to the Manual User Guideline page by clicking the button below:</p>
-        <div id="userGuidelineBtnDiv"><button id="userGuidelineBtn" class="firstBtn">Manual User Guideline</button><button id="bulkPageBtn" class="firstBtn">Bulk Page</button></div>
+        <div id="userGuidelineBtnDiv"><button id="userGuidelineBtn" class="firstBtn">Manual User Guideline</button><button id="bulkPageBtn" class="firstBtn">Bul Page</button></div>
         <p>This website is a tool where you can drag and drop your datasets on drugs and cancer cell lines in order to make prediction on the drug resistance on the cancer cell lines.</p>
       </div>
       <div id="cancerPosition">
-        <img src="/Predictive Model Web Application/src/static/images/red_cancer.png" alt="cancer-cell">
+        <img src="{{ url_for('static', filename='images/red_cancer.png') }}" alt="cancer-cell">
       </div>
       </div>
     </section>
@@ -80,23 +63,16 @@
     <p>Please select manual user prediction or default drug-sensitivity:</p>
     <div id="buttonsDiv">
 
-      <button class="mainButton" onclick="manualtButton()">User Manual Prediction</button>
+      <button class="mainButton" onclick="manualButton()">User Manual Prediction</button>
       <button class="mainButton" onclick="defaultButton()">Default Dataset</button>
 
     </div>
    </section>
 
-    <section id="fileUploadSection">
-      <!-- <div class="drop-area">
-        <p class="file-upload-instructions">
-          <img src="/Predictive Model Web Application/src/static/images/upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">
-          Drop and Upload Dataset in CSV file for Prediction
-        </p>
-        <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>
-      <button class="drop-box" onclick="document.getElementById('fileInput').click();">Browse File</button> 
-        <p id="uploadedFileName"></p>  Placeholder for displaying uploaded file name -->
-      <!-- </div> -->
+    <section id="fileUploadSection" class="drop-area">
+      
     </section>
+
 
     <section id="predictionSection">
       <!-- <div id="predictionDiv">
@@ -176,90 +152,89 @@
       
     </section>
   </main>
-
 <!-- visualisation container -->
   <section id="OutputVisSection">
-    <div id="OutputVis">
-          <div id="bar_chart" class="vis-container"></div>
-        
-    </div>
-
+    <div id="OutputVis"></div>
   </section>
 
+  <!-- <section class="labelSection" id="defaultDatasetLabelSection">
+    <h2 class="label" id="defaultDatasetLabel">Default Drug-Cell Dataset</h2>
+    <!-- <p>Estimated Prediction Accuracy: <span id="accuracy">98.35%</span></p> -->
+    <!-- Results will be displayed here after prediction -->
+    
+  <!--</section> -->
 
   <footer class="mainDivider">
     <p class="footer">&copy; 2024 DRUGRES. All rights reserved. <br>
       Published by: Monash University FIT3164 - MDS6<br>
       Prepared by: Helena Tam, Yu Mei Ng, Muhammad Azhar Ali Boolaky
-      </p> 
+      </p>
+
+    
   </footer>
 
-  <script src="/Predictive Model Web Application/src/web.js"></script>
+  <script src="{{ url_for('static', filename='js/web.js') }}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
-    $(document).ready(function(){
-        var dropArea = $('#fileUploadSection .drop-area');
+    // $(document).ready(function(){
+    //     var dropArea = $('#fileUploadSection .drop-area');
   
-        // Prevent default drag behaviors
-        dropArea.on('dragover', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            $(this).addClass('dragging');
-        });
+    //     // Prevent default drag behaviors
+    //     dropArea.on('dragover', function(e) {
+    //         e.preventDefault();
+    //         e.stopPropagation();
+    //         $(this).addClass('dragging');
+    //     });
   
-        // Remove highlight when dragging out
-        dropArea.on('dragleave', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            $(this).removeClass('dragging');
-        });
+    //     // Remove highlight when dragging out
+    //     dropArea.on('dragleave', function(e) {
+    //         e.preventDefault();
+    //         e.stopPropagation();
+    //         $(this).removeClass('dragging');
+    //     });
   
-        // Handle dropped files
-        dropArea.on('drop', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            $(this).removeClass('dragging');
+    //     // Handle dropped files
+    //     dropArea.on('drop', function(e) {
+    //         e.preventDefault();
+    //         e.stopPropagation();
+    //         $(this).removeClass('dragging');
   
-            var files = e.originalEvent.dataTransfer.files;
-            uploadFiles(files);
-        });
+    //         var files = e.originalEvent.dataTransfer.files;
+    //         uploadFiles(files);
+    //     });
   
-        // Handle file selection via input
-        $('#fileInput').change(function() {
-            uploadFiles(this.files);
-        });
+    //     // Handle file selection via input
+    //     $('#fileInput').change(function() {
+    //         uploadFiles(this.files);
+    //     });
   
-        //Function to upload files
-        function uploadFiles(files) {
-            var file = files[0]; // If multiple files are selected, handle them here or adjust as needed
-            var formData = new FormData();
-            formData.append('file', file);
+    //     // Function to upload files
+    //     function uploadFiles(files) {
+    //         var file = files[0]; // If multiple files are selected, handle them here or adjust as needed
+    //         var formData = new FormData();
+    //         formData.append('file', file);
   
-            $.ajax({
-                url: '/upload',
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    $('#uploadedFileName').text('Uploaded File: ' + data.filename); // Adjust this if handling multiple files
-                },
-                error: function() {
-                    $('#uploadedFileName').text('Failed to upload file.');
-                }
-            });
-        }
-    });
+    //         $.ajax({
+    //             url: '/upload',
+    //             type: 'POST',
+    //             data: formData,
+    //             contentType: false,
+    //             processData: false,
+    //             success: function(data) {
+    //                 $('#uploadedFileName').text('Uploaded File: ' + data.filename); // Adjust this if handling multiple files
+    //             },
+    //             error: function() {
+    //                 $('#uploadedFileName').text('Failed to upload file.');
+    //             }
+    //         });
+    //     }
+    // });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    setupFileUpload();
+});
     </script>
     
-    <!-- <script type="text/javascript">
-
-      var specVis1 = "/Predictive Model Web Application/src/vis/default_bar_vis.json";
-      vegaEmbed('#bar_chart', specVis1, { "actions": false }).then(function (result) {
-        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-      }).catch(console.error);
-  
-    </script> -->
 
 </body>
 </html>

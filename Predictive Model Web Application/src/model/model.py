@@ -112,5 +112,9 @@ def run_model(df_permanent, df_upload):
     # Reset the index of the prediction DataFrame
     prediction_df.reset_index(drop=True, inplace=True)
 
-    return prediction_df.to_csv('user_prediction_result.csv')
+    print(prediction_df)
 
+    return prediction_df
+
+if __name__ == '__main__':
+    run_model('C:/Users/Ali Azhar/Documents/Final Web/MDS6_FIT3164/Predictive Model Web Application/src/uploads/Drug_Breast_Cancer_Data.csv', 'C:/Users/Ali Azhar/Documents/Final Web/MDS6_FIT3164/Predictive Model Web Application/src/user_file/sample_user_file.csv')
