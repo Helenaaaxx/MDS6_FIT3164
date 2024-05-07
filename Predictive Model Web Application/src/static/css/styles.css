@@ -273,8 +273,12 @@ table th{
     text-align: left;   
 }
 
-td:last-child, th:last-child{
+td:nth-child(5), th:nth-child(5){
     background-color: antiquewhite;
+}
+
+td:nth-child(6), th:nth-child(6){
+    background-color: rgb(201, 219, 242);
 }
 
 table td{   

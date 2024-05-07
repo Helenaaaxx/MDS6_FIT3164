@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DRUGRES Predictive Model</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <!-- CSS file -->
+  <link rel="stylesheet" href="/Predictive Model Web Application/src/static/css/userGuideStyle.css">
+
+  <!-- Import pure.css -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+  integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+  <main class="main-content">
+
+    <section>
+      <div class = "mainDivider">
+        <h1 class = 'bigMainTitle'> &nbsp; DRUGRES</h1>
+        <p class="subTitle" id="c-align" >A tool for prediting drug resistance in cancer cell lines using machine learning approaches <br> Visualisation by: MDS6</p>
+     
+  </div>
+    </section>
+
+    <section id="firstSec" class="sec">
+        <div id="firstDiv" class="division">
+            <h2>
+                DrugRes - Functionalities Guideline
+            </h2>
+            <p>
+              <ol>
+                <li>Upon launching the web application, users will encounter two primary buttons to choose from:
+                  <ul>
+                    <li>User Manual Prediction: This option is ideal for users who wish to upload their own dataset to predict drug sensitivity manually.
+                    </li>
+                    <li>Default Dataset: Select this option if the user prefers to directly access drug sensitivity data from the default GDSC-CCLE drug-cancer dataset provided.
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  Initial Assumption: Before selecting any of the two buttons, the web application will automatically assume that the default dataset option is selected. As a result, it will display the GDSC-CCLE 
+                  drug-cancer dataset and the default output visualisation. Users can then proceed to choose between the two options based on your preference and requirements.
+
+                </li>
+
+                <li>
+                  Upon clicking the "User Manual Prediction" button, a dropbox will appear, allowing you to upload a single dataset. This dataset should consist of drug and cell line information in CSV format only. 
+                  Since no prediction is made before user upload, the prediction result and output visualisation sections will remain blank. Please ensure that the uploaded dataset follows the specific format outlined 
+                  in the "User Upload Data Format Requirement" provided below.
+                </li>
+
+                <li>
+                  Users can upload their dataset by either dragging and dropping the file into the dropbox or by clicking the "Browse" button to select the file manually. Once the dataset is uploaded, users need to 
+                  click the "Make Prediction" button to initiate the prediction process. Please note that data processing may take some time, so we kindly ask for your patience. The web application will utilize the 
+                  trained predictive model to make predictions based on the uploaded dataset. The prediction output will be presented in a tabular format, and an output visualisation will be provided to enhance the understanding of the prediction results.
+                </li>
+
+                <li>
+                  Users have the option to export either the prediction result or the default GDSC-CCLE dataset in CSV format. This functionality allows users to save the data for further analysis or reference.
+                </li>
+
+                <li>
+                  The prediction result table and the default GDSC-CCLE table both feature a sorting function. This enables users to rearrange the table's rows based on specific criteria, enhancing comprehension and ease of navigation.
+                </li>
+
+                <li>
+                  Filter buttons are available above the default dataset or the prediction table. Users can utilize these filters to manually search for specific drugs or cell lines of interest. The filtering options include manual key-in 
+                  search and checkbox selection, providing flexibility in data exploration and analysis.
+                </li>
+
+              </ol>
+            </p>
+        </div>
+    </section>
+
+    <section id="secondSec" class="sec">
+      <div id="secondDiv" class="division">
+          <h2>
+            User Upload Data Format Requirement:
+          </h2>
+          <p>
+            <ol>
+              <li>        
+                The uploaded dataset should strictly adhere to the provided format. Below is a sample dataset for reference and users can download the sample dataset to serve as the template of the user upload data.
+                <div class="linkDiv">
+                  <a href="/Predictive Model Web Application/src/uploads/sample_user_data.csv"  id="downloadSample"><button onclick="download()">Download sample template</button></a>
+                </div> 
+              </li>
+
+              <li>
+                The "isosmiles" column in the sample dataset can be obtained from the PubChem website <span><a href="https://pubchem.ncbi.nlm.nih.gov/">https://pubchem.ncbi.nlm.nih.gov/</a></span> following these steps:
+              <ul style="list-style-type: lower-alpha;">
+                <li>
+                  Click the “UPLOAD ID LIST” button.
+                </li>
+
+                <li>
+                  Enter a list of drug IDs manually in the text field, separating each drug ID by a comma (e.g., 1013, 1014, 1015).
+                </li>
+
+                <li>
+                  Alternatively, upload a CSV file containing a drug list, with one drug per line.
+                </li>
+
+                <li>
+                  After entering or uploading the drug list, download the "isosmiles" in CSV format to retrieve the “isosmiles” of the drugs to be predicted. Document these”isosmiles” into the user upload dataset.
+                </li>
+
+              </ul>
+
+              <p>
+                Note: <br>
+                ** If the format of the uploaded dataset does not match the requirements, an error prompt message will notify the user that the uploaded dataset does not align with the specified format. 
+                You can upload the corrected dataset again. <br>
+                ** If there are any NA values in any rows of the user upload data, those rows will be removed upon making predictions.
+
+              </p>
+              </li>
+
+            </ol>
+          </p>
+      </div>
+  </section>
+
+
+  <section id="thirdSec" class="sec">
+    <div id="thirdDiv" class="division">
+        <h2>
+          Drug-Cell Sensitivity Table/ Prediction Output 
+        </h2>
+        <p class="withText">
+          The table provides information on drug-cell resistance prediction, with the following headers:
+         <ul>
+            <li>
+              COSMIC_ID: Unique identifier for the cancer cell line.
+            </li>
+
+            <li>
+              CCLE_Name: The name of the cancer cell line.
+            </li>
+
+            <li>
+              DRUG_ID: Unique identifier for the drug.
+            </li>
+
+            <li>
+              DRUG_NAME: The name of the drug.
+            </li>
+
+            <li>
+              LN_IC50: The natural logarithm of the IC50 value, indicating the resistance of the drug to the cancer cell line.
+            </li>
+
+            <li>
+              Resistance_Cut-Off: The cut-off point of LN_IC50, distinguishing between high resistance and low resistance effects of the drug on the cell line.
+            </li>
+
+          </ul>
+        </p>
+    </div>
+</section>
+
+
+<section id="fourthSec" class="sec">
+  <div id="fourthDiv" class="division">
+      <h2>
+        Abbreviations
+      </h2>
+      <p class="withText">
+        GDSC: Genomics of Drug Sensitivity in Cancer <br>
+        CCLE: Cancer Cell Line Encyclopedia <br>
+        Isosmiles: Isomeric Simplified Molecular Input Line Entry System <br>    
+      </p>
+  </div>
+</section>
+
+<section id="fifthSec" class="sec">
+  <div id="fifthDiv" class="division">
+      <h2>
+        Explanation on LN_IC50 and Results Interpretation
+      </h2>
+      <p>
+        <ol>
+          <li>
+            A lower LN_IC50 value indicates a more potent drug, reflecting higher sensitivity to the cancer cell line and lower resistance.
+          </li>
+
+          <li>
+            The cutoff point of LN_IC50 is 3.7672284205249125. LN_IC50 values at or below 3.77 indicate drugs with high sensitivity to the cancer cell line (low resistance), while LN_IC50 values above 3.77 
+            suggest low sensitivity to the cancer cell line (high resistance).
+          </li>
+
+        </ol>  
+      </p>
+  </div>
+</section>
+
+<section id="sixthSec" class="sec">
+  <div id="sixthDiv" class="division">
+      <h2>
+        Data Source:
+      </h2>
+      <p class="withText">
+        Drug Response Dataset (GDSC-2): <span><a href="https://www.cancerrxgene.org/downloads/bulk_download">https://www.cancerrxgene.org/downloads/bulk_download</a></span>
+      <br>
+      Gene Expression Dataset: <span><a href="https://depmap.org/portal/download/all/">https://depmap.org/portal/download/all/</a></span>
+      <br>
+      Drug Compound Structure Dataset: <span><a href="https://pubchem.ncbi.nlm.nih.gov/">https://pubchem.ncbi.nlm.nih.gov/</a></span> 
+      </p>
+  </div>
+</section>
+
+
+    <footer class="mainDivider">
+      <p class="footer">&copy; 2024 DRUGRES. All rights reserved. <br>
+        Published by: Monash University FIT3164 - MDS6<br>
+        Prepared by: Helena Tam, Yu Mei Ng, Muhammad Azhar Ali Boolaky
+        </p> 
+    </footer>
+   
+  </main>
+
+ 
+
+  <script src="/Predictive Model Web Application/src/web.js"></script>
+</body>
+</html>

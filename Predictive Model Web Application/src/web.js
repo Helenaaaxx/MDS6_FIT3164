@@ -279,6 +279,15 @@ exportBtn.addEventListener("click", function() {
   link.click();
 });
 
+
+function download(){
+  var link = document.getElementById("downloadSample");
+  link.download = "sample_user_data.csv";
+
+  
+
+}
+
 var isAscending = 1;
 
 
