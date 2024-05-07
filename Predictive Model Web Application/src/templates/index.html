@@ -8,8 +8,25 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- Import pure.css -->
+  
+  <!-- CSS file -->
   <link rel="stylesheet" href="/Predictive Model Web Application/src/static/css/styles.css">
+
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+  <!-- Import pure.css -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+  integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
 </head>
 <body>
   <!-- <header class="header">
@@ -42,7 +59,7 @@
       <div id="first-inner">
         <div id="left-part">
           <p>For understanding how to use our web application tool properly, please direct to the Manual User Guideline page by clicking the button below:</p>
-        <div id="userGuidelineBtnDiv"><button id="userGuidelineBtn" class="firstBtn">Manual User Guideline</button><button id="bulkPageBtn" class="firstBtn">Bul Page</button></div>
+        <div id="userGuidelineBtnDiv"><button id="userGuidelineBtn" class="firstBtn">Manual User Guideline</button><button id="bulkPageBtn" class="firstBtn">Bulk Page</button></div>
         <p>This website is a tool where you can drag and drop your datasets on drugs and cancer cell lines in order to make prediction on the drug resistance on the cancer cell lines.</p>
       </div>
       <div id="cancerPosition">
@@ -159,25 +176,26 @@
       
     </section>
   </main>
+
 <!-- visualisation container -->
   <section id="OutputVisSection">
-    <div id="OutputVis"></div>
+    <div id="OutputVis">
+      <div class="pure-g">
+          <div id="bar_chart" class="vis-container"></div>
+        <div class="pure-u-1-3">
+            
+        </div>
+      </div>
+    </div>
+
   </section>
 
-  <!-- <section class="labelSection" id="defaultDatasetLabelSection">
-    <h2 class="label" id="defaultDatasetLabel">Default Drug-Cell Dataset</h2>
-    <!-- <p>Estimated Prediction Accuracy: <span id="accuracy">98.35%</span></p> -->
-    <!-- Results will be displayed here after prediction -->
-    
-  <!--</section> -->
 
   <footer class="mainDivider">
     <p class="footer">&copy; 2024 DRUGRES. All rights reserved. <br>
       Published by: Monash University FIT3164 - MDS6<br>
       Prepared by: Helena Tam, Yu Mei Ng, Muhammad Azhar Ali Boolaky
-      </p>
-
-    
+      </p> 
   </footer>
 
   <script src="/Predictive Model Web Application/src/web.js"></script>
@@ -236,10 +254,16 @@
             });
         }
     });
-
-   
     </script>
     
+    <script type="text/javascript">
+
+      var specVis1 = "/Predictive Model Web Application/src/vis/default_bar_vis.json";
+      vegaEmbed('#bar_chart', specVis1, { "actions": false }).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+      }).catch(console.error);
+  
+    </script>
 
 </body>
 </html>

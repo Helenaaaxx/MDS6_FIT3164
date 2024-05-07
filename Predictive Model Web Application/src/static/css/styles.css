@@ -6,9 +6,10 @@ body *{
 main{
     padding-left: 10px;
     padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
   
-
 .mainDivider {
     background-color: rgb(64, 29, 34);
     padding-top: 5px;
@@ -43,13 +44,11 @@ main{
     width: 90%;
 }
 
-
 #left-part{
     width: 40%;
   }
 
 #userGuidelineBtnDiv{
-
     margin-left: 25%;
     width: 50%;
     display: flex;
@@ -338,6 +337,21 @@ table button{
     padding-bottom: 100px;
 }
 
+.vis-container {
+    width: 100%;
+  }
+
+.pure-u-1{
+  background-color: rgb(250, 248, 245);
+}
+
+/* outer whole container */
+.pure-g {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
 
 .footer {
     text-align: center;
