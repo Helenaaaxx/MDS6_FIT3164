@@ -1,6 +1,12 @@
 body *{
     font-family: 'Open Sans', sans-serif;
+    
   }
+
+main{
+    padding-left: 10px;
+    padding-right: 10px;
+}
   
 
 .mainDivider {
@@ -34,23 +40,23 @@ body *{
 #first-inner{
     display: flex;
     justify-content: space-between;
-    width: 70%;
+    width: 90%;
 }
 
 
 #left-part{
-
     width: 40%;
-
   }
 
 #userGuidelineBtnDiv{
 
+    margin-left: 25%;
+    width: 50%;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
 }
 
-#userGuidelineBtn{
+.firstBtn{
     background-color: gray;
     color: white;
     border-radius: 10px;
@@ -187,6 +193,43 @@ body *{
     font-size: 25px;
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content .filterClass {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    border-style: solid;
+    border-width: 1px;
+    display: block;
+  }
+
+  .dropdown-content {
+    overflow-y: scroll;
+    height: 300px;
+    display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    min-width: 150px;
+    overflow: auto;
+    border: 1px solid #ddd;
+    z-index: 1;
+  }
+
+  .show {display: block;}
+
+  .search {
+    box-sizing: border-box;
+    background-position: 14px 12px;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+  }
 
 .filter{
     padding-top: 5px;
@@ -227,7 +270,7 @@ table{
     border-width: 1px;
     border-color: black;
     table-layout: fixed;
-    width: 70% ;
+    width: max-content+5;
 }
 
 table th{
@@ -245,7 +288,7 @@ td:last-child, th:last-child{
 
 table td{   
     font-size: 20px;
-    width: 20%;
+    
 }
 
 th, td{

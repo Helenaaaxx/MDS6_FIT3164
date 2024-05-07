@@ -78,12 +78,13 @@ function manualtButton(){
   var predictionLabel = document.getElementById('predictionLabel');
   fileUploadSec.innerHTML = '<div class="drop-area">'+'<p class="file-upload-instructions">'+'<img src="/Predictive Model Web Application/src/static/images/upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">'+
   'Drop and Upload Dataset in CSV file for Prediction</p>'+'<input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>'+
-  '<button class="drop-box" onclick=onclick="document.getElementById("fileInput").click();">Browse File</button>'+'<p id="uploadedFileName"></p>'+'</div>';
+  '<button class="drop-box" onclick="document.getElementById("fileInput").click();">Browse File</button>'+'<p id="uploadedFileName"></p>'+'</div>';
   predictionSec.innerHTML= ' <div id="predictionDiv">'+' <button id="makePredictionButton">Make Prediction</button>'+'</div>';
 
   predictionLabel.textContent="Prediction result";
   visualLabel.textContent = "Prediction output Visualisation";
 }
+
 
 (function() {
   var DELIMITER = ',';
@@ -373,3 +374,199 @@ function queue4(){
       tbody.appendChild(row);
   });
 };
+
+function filter(index, element) {
+
+  
+
+  var dropdown1 = element;
+  var table = document.getElementById("drug-table");
+  
+
+  var uniqueValues = new Set();
+  for(var i = 1; i < table.rows.length; i++){
+
+    var cellValue = table.rows[i].cells[index].textContent.trim();
+    uniqueValues.add(cellValue);
+  }
+
+  var arr = Array.from(uniqueValues);
+  var allcheckBox = [];
+  var allLabel = [];
+
+
+  var checkedValues =  new Set();
+  var rows = Array.from(table.rows);
+
+  
+  var textField = document.createElement("input");
+  textField.type = "text";
+  textField.placeholder = "Search";
+  textField.id="search"+index;
+  textField.className="search";
+  dropdown1.appendChild(textField);
+  dropdown1.appendChild(document.createElement("br"));
+
+
+  //Create Select All Button
+  var label = document.createElement("label");
+  var checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.value = "Select All";
+  checkbox.id="checkAll"+index;
+  label.appendChild(checkbox);
+  label.appendChild(document.createTextNode("Select All"));
+  dropdown1.appendChild(label);
+  dropdown1.appendChild(document.createElement("br"));
+
+  var label = document.createElement("label");
+  var checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.value = "Unselect All";
+  checkbox.id="uncheckAll"+index;
+  label.appendChild(checkbox);
+  label.appendChild(document.createTextNode("Unselect All"));
+  dropdown1.appendChild(label);
+  dropdown1.appendChild(document.createElement("br"));
+
+
+  arr.forEach(function(value) {
+    
+    var label = document.createElement("label");
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.value = value;
+    allcheckBox.push(checkbox);
+    
+    checkbox.addEventListener("change", function(event) {
+      
+      // Call a function when the checkbox is checked
+      if (event.target.checked) {
+        checkedValues.add(event.target.value);
+        if(document.getElementById("uncheckAll"+index).checked===true){
+          document.getElementById("uncheckAll"+index).checked = false;
+        }
+      } else {
+        checkedValues.delete(event.target.value);
+        if(document.getElementById("checkAll"+index).checked===true){
+          document.getElementById("checkAll"+index).checked = false;
+        }
+          
+      }
+
+      if(checkedValues.size>0){
+        for(var k = 0; k<rows.length; k++){
+
+          var row = rows[k];
+          if (checkedValues.has(row.cells[index].textContent.trim()) || k===0) {
+            row.style.visibility  = "visible";
+            row.style.display="table-row";
+         }
+         else{
+              row.style.visibility  = "hidden";
+             row.style.display = "none";
+         }
+        }
+      }
+      else{
+          rows.forEach(function(row) { 
+       
+           row.style.visibility  = "visible";
+           row.style.display="table-row";
+        
+    });
+      }
+    
+      
+  });
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(value));
+    label.style.display="block";
+    allLabel.push(label);
+    dropdown1.appendChild(label);
+    
+});
+
+    
+
+    document.getElementById("checkAll"+index).addEventListener("change", function(event) {
+      
+      // Call a function when the checkbox is checked
+      if (event.target.checked) {
+        allcheckBox.forEach(function(box){
+
+          box.checked =true;
+          checkedValues.add(box.value);
+          var changeEvent = new Event("change");
+          box.dispatchEvent(changeEvent);
+    
+        });
+      }
+    
+      
+  });
+
+  document.getElementById("uncheckAll"+index).addEventListener("change", function(event) {
+      
+    // Call a function when the checkbox is checked
+    if (event.target.checked) {
+      allcheckBox.forEach(function(box){
+
+        box.checked =false;
+        if(checkedValues.has(box.value)){
+          checkedValues.delete(box.value);
+        }
+        var changeEvent = new Event("change");
+        box.dispatchEvent(changeEvent);
+  
+      });
+    } 
+    
+});
+
+document.getElementById("search"+index).addEventListener("keyup", function(event) {
+  
+  const filter = event.target.value.toUpperCase();
+
+  for(var m = 0; m < allcheckBox.length; m++){
+
+    var box = allcheckBox[m];
+    if(box.value.toUpperCase().substring(0,filter.length)===filter){
+      allLabel[m].style.display="block";
+      
+    }
+
+    else{
+      allLabel[m].style.display="none";
+     
+    }
+
+  };
+
+  // for (let i = 1; i < checkboxTag.length; i++) {
+  //   txtValue = checkboxTag[i].value || checkboxTag[i].innerText;
+  //   if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      
+  //     checkboxTag[i].style.display = "input";
+  //   } else {
+      
+  //     checkboxTag[i].style.display = "none";
+  //   }
+  // }
+
+      
+  
+  
+  
+
+  
+});
+
+
+
+
+dropdown1.classList.toggle("show");
+
+
+ 
+}

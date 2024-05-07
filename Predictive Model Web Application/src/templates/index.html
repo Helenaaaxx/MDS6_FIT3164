@@ -42,7 +42,7 @@
       <div id="first-inner">
         <div id="left-part">
           <p>For understanding how to use our web application tool properly, please direct to the Manual User Guideline page by clicking the button below:</p>
-        <div id="userGuidelineBtnDiv"><button id="userGuidelineBtn">Manual User Guideline</button></div>
+        <div id="userGuidelineBtnDiv"><button id="userGuidelineBtn" class="firstBtn">Manual User Guideline</button><button id="bulkPageBtn" class="firstBtn">Bul Page</button></div>
         <p>This website is a tool where you can drag and drop your datasets on drugs and cancer cell lines in order to make prediction on the drug resistance on the cancer cell lines.</p>
       </div>
       <div id="cancerPosition">
@@ -76,7 +76,7 @@
           Drop and Upload Dataset in CSV file for Prediction
         </p>
         <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>
-        <button class="drop-box" onclick="document.getElementById('fileInput').click();">Browse File</button>
+      <button class="drop-box" onclick="document.getElementById('fileInput').click();">Browse File</button> 
         <p id="uploadedFileName"></p>  Placeholder for displaying uploaded file name -->
       <!-- </div> -->
     </section>
@@ -97,10 +97,29 @@
     <section>
       <div id="filterDiv">
         <div><p id="filterLabel">Filter by : </p></div>
-        <button class="filter" id="cosmicFilter">Cosmic ID</button>
-        <button class="filter" id="cellNameFilter">Cell Line Name</button>
-        <button class="filter" id="drugIdFilter">Drug ID</button>
-        <button class="filter" id="drugNameFilter">Drug Name</button>
+        <div class="dropdown">
+          <button class="filter" id="cosmicFilter" onclick="filter(0, document.getElementById('myDropdown1'))">Cosmic ID</button>
+          <div id="myDropdown1" class="dropdown-content">
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="filter" id="cellNameFilter" onclick="filter(1, document.getElementById('myDropdown2'))">Cell Line Name</button>
+          <div id="myDropdown2" class="dropdown-content">
+           
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="filter" id="drugIdFilter" onclick="filter(2, document.getElementById('myDropdown3'))">Drug ID</button>
+          <div id="myDropdown3" class="dropdown-content">
+           
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="filter" id="drugNameFilter" onclick="filter(3, document.getElementById('myDropdown4'))">Drug Name</button>
+          <div id="myDropdown4" class="dropdown-content">
+           
+          </div>
+        </div>
       </div>
       <div id="exportDiv">
         <button id="exportBtn">Export</button>
@@ -196,7 +215,7 @@
             uploadFiles(this.files);
         });
   
-        // Function to upload files
+        //Function to upload files
         function uploadFiles(files) {
             var file = files[0]; // If multiple files are selected, handle them here or adjust as needed
             var formData = new FormData();
@@ -217,6 +236,8 @@
             });
         }
     });
+
+   
     </script>
     
 
