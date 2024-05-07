@@ -65,6 +65,7 @@ main{
     padding-right: 15px;
     font-size: 15px;
     font-weight: bold;
+    cursor: pointer;
 
 }
 
@@ -93,8 +94,8 @@ main{
     padding-right: 15px;
     border-radius: 10px;
     margin-bottom: 10px;
+    cursor: pointer;
 }
- 
 
 #fileUploadSection{
     background-color: gray;
@@ -104,14 +105,12 @@ main{
     border-style: solid;
     border-width: 2px;
     border-color: black;
-    
 }
 
 .drop-area{
     display: flex;
     justify-content: space-between;
 }
-
 
 .file-upload-instructions{
     color: white;
@@ -128,8 +127,6 @@ main{
     color: black;
     background-color: white;
 }
-
-
 
 #predictionDiv{
     border-style: solid;
@@ -153,6 +150,7 @@ main{
     font-weight: 700;
     text-align: center;
     border-radius: 10px;
+    cursor: pointer;
      
 }
 
@@ -172,10 +170,7 @@ main{
     font-size: 25px;
 }
 
-
-
 .labelSection{
-    
     background-color: #F1ECDE;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -240,7 +235,7 @@ main{
     background-color: #D3D3D3;
     color: black;
     border-radius: 10px;
-
+    cursor: pointer;
 }
 
 #filterLabel{
@@ -275,10 +270,7 @@ table{
 table th{
     font-weight: bold;
     font-size: 25px;
-    text-align: left;
-    
-    
-    
+    text-align: left;   
 }
 
 td:last-child, th:last-child{
@@ -316,7 +308,7 @@ table button{
     background-color: gray;
     color: white;
     border-radius: 5px;
-    
+    cursor: pointer;
 } 
 
 #exportDiv{
@@ -332,7 +324,6 @@ table button{
 }
 
 #OutputVisSection{
-
     padding-bottom: 100px;
     margin-bottom: 20px;
     margin-top: 20px;
@@ -360,8 +351,7 @@ table button{
 .footer {
     text-align: center;
     font-size: 15px;
-    color:azure;
-    
+    color:azure; 
   }
 
 

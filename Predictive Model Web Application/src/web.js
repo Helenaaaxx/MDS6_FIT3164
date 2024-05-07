@@ -160,7 +160,7 @@ var uniqueValues1 = new Set();
       var jsonData = {
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
         "height": 1400,
-        "width": 2500,
+        "width": 2200,
         "background": "white",
         "data": {
           "url": "https://raw.githubusercontent.com/Helenaaaxx/MDS6_FIT3164/main/Predictive%20Model%20Web%20Application/src/uploads/Drug_Breast_Cancer_Data.csv"
@@ -183,7 +183,7 @@ var uniqueValues1 = new Set();
             "type": "nominal",
             "title": "Drug Name",
             "sort": "-x",
-            "axis": {"titleFontSize": 18, "labelFontSize": 11.5}
+            "axis": {"titleFontSize": 18, "labelFontSize": 13}
           },
           "tooltip": [
             {"field": "DRUG_NAME", "type": "nominal"},
@@ -196,7 +196,7 @@ var uniqueValues1 = new Set();
         "params": [
           {
             "name": "COSMIC_ID",
-            "value": 909907,
+            "value": arr1[0],
             "bind": {
               "input": "select",
               "options": arr1,
@@ -207,19 +207,11 @@ var uniqueValues1 = new Set();
         "config": {}
       };
       
-      
       vegaEmbed('#bar_chart', jsonData, { "actions": false }).then(function (result) {
         // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
       }).catch(console.error);
       
-      
-      
   }
-
-
-
-
-
 })();
 
 
@@ -557,10 +549,7 @@ function filter(index, element) {
     
 });
 
-    
-
-    document.getElementById("checkAll"+index).addEventListener("change", function(event) {
-      
+    document.getElementById("checkAll"+index).addEventListener("change", function(event) {     
       // Call a function when the checkbox is checked
       if (event.target.checked) {
         allcheckBox.forEach(function(box){
@@ -572,8 +561,6 @@ function filter(index, element) {
     
         });
       }
-    
-      
   });
 
   document.getElementById("uncheckAll"+index).addEventListener("change", function(event) {
@@ -624,16 +611,10 @@ document.getElementById("search"+index).addEventListener("keyup", function(event
   //   }
   // }
 
-      
-  
-  
   
 
   
 });
-
-
-
 
 dropdown1.classList.toggle("show");
  
