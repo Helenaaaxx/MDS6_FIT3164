@@ -21,14 +21,14 @@ main{
   .bigMainTitle{
     font-weight: 1000;
     color:rgb(250, 248, 245);
-    font-size: 28px;
+    font-size: 36px;
     text-align: center;
     margin-top: -1px;
   }
 
   .subTitle {
     text-align: center;
-    font-size: 15px;
+    font-size: 18px;
     color:azure;
     margin-top:-20px;
   }

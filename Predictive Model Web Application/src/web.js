@@ -182,9 +182,29 @@ var uniqueValues1 = new Set();
             "field": "DRUG_NAME",
             "type": "nominal",
             "title": "Drug Name",
-            "sort": "-x",
+            "sort": "x",
             "axis": {"titleFontSize": 18, "labelFontSize": 13}
           },
+          "color": {
+            "field": "LN_IC50",
+            "type": "quantitative",
+            "scale": {
+              "domain": [null, 3.77],
+              "range": ["orange", "#9D9A9A"]
+            },
+            "title": "LN_IC50"
+          },
+          // "color": {
+          //   "field": "LN_IC50",
+          //   "type": "quantitative",
+          //   "scale": null, // Disable scale
+          //   "title": "LN_IC50",
+          //   "condition": {
+          //     "test": "datum.LN_IC50 <= 3.77", // Corrected condition
+          //     "value": "orange"
+          //   },
+          //   "else": {"value": "gray"}
+          // },
           "tooltip": [
             {"field": "DRUG_NAME", "type": "nominal"},
             {"field": "DRUG_ID", "type": "nominal"},
@@ -611,9 +631,6 @@ document.getElementById("search"+index).addEventListener("keyup", function(event
   //   }
   // }
 
-  
-
-  
 });
 
 dropdown1.classList.toggle("show");
