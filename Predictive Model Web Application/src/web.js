@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //   // Then update the prediction results and accuracy
 // });
 
-
+//display default dataset
 function defaultButton(){
   var fileUploadSec = document.getElementById("fileUploadSection");
   var predictionSec = document.getElementById('predictionSection');
@@ -69,13 +69,21 @@ function defaultButton(){
   predictionLabel.textContent="Default GDSC-CCLE Drug-Cell line sensitivity dataset";
   visualLabel.textContent = "Default GDSC-CCLE Drug-Cell Sensitivity Visualisation";
 
+  createTable('/Predictive Model Web Application/src/uploads/Drug_Breast_Cancer_Data_Display.csv');
+
+
 }
 
+
+//use to choose manual prediction
 function manualtButton(){
   var fileUploadSec = document.getElementById("fileUploadSection");
   var predictionSec = document.getElementById('predictionSection');
   var visualLabel= document.getElementById("predictionOutputLabel");
   var predictionLabel = document.getElementById('predictionLabel');
+  var table = document.getElementById('table-container');
+  var visual = document.getElementById('bar_chart');
+
   fileUploadSec.innerHTML = '<div class="drop-area">'+'<p class="file-upload-instructions">'+'<img src="/Predictive Model Web Application/src/static/images/upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">'+
   'Drop and Upload Dataset in CSV file for Prediction</p>'+'<input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>'+
   '<button class="drop-box" onclick="document.getElementById("fileInput").click();">Browse File</button>'+'<p id="uploadedFileName"></p>'+'</div>';
@@ -83,14 +91,18 @@ function manualtButton(){
 
   predictionLabel.textContent="Prediction result";
   visualLabel.textContent = "Prediction output Visualisation";
+
+  table.innerHTML = '<table>'  + '</table>';
+  visual.innerHTML='';
 }
 
-var uniqueValues1 = new Set();
 
-(function() {
+//create table and visualisation, just pass the file path as parameter
+function createTable(path) {
+  var uniqueValues1 = new Set();
   var DELIMITER = ',';
   var NEWLINE = '\n';
-  var filePath = "/Predictive Model Web Application/src/uploads/Drug_Breast_Cancer_Data.csv";
+  var filePath = path;
   var table = document.getElementById('table-container');
 
   if (!table) {
@@ -127,8 +139,11 @@ var uniqueValues1 = new Set();
           else if(index === 3){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn3" onclick="queue3()"> <i class="fa fa-sort"></i></button></th>';
           }
-          else if(index === headers.length - 1){
+          else if(index === 4){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn4" onclick="queue4()"> <i class="fa fa-sort"></i></button></th>';
+          }
+          else if(index === headers.length - 1){
+            tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn5" onclick="queue5()"> <i class="fa fa-sort"></i></button></th>';
           }
           }
       });
@@ -163,7 +178,7 @@ var uniqueValues1 = new Set();
         "width": 2200,
         "background": "white",
         "data": {
-          "url": "https://raw.githubusercontent.com/Helenaaaxx/MDS6_FIT3164/main/Predictive%20Model%20Web%20Application/src/uploads/Drug_Breast_Cancer_Data.csv"
+          "url": path
         },
         "mark": {"type": "bar", "cursor": "pointer"},
         "transform": [
@@ -232,9 +247,9 @@ var uniqueValues1 = new Set();
       }).catch(console.error);
       
   }
-})();
+};
 
-
+// download table
 exportBtn.addEventListener("click", function() {
     
   var table = document.getElementById("drug-table");
@@ -266,6 +281,8 @@ exportBtn.addEventListener("click", function() {
 
 var isAscending = 1;
 
+
+//sort function for column1
 function queue(){
   isAscending+=1;
   var table = document.getElementById("drug-table");
@@ -304,7 +321,7 @@ function queue(){
 
 
 var isAscending1 = 1;
-
+//sort function for column2
 function queue1(){
   isAscending1+=1;
   var table = document.getElementById("drug-table");
@@ -343,7 +360,7 @@ function queue1(){
 
 
 var isAscending2 = 1;
-
+//sort function for column3
 function queue2(){
   isAscending2+=1;
   var table = document.getElementById("drug-table");
@@ -382,7 +399,7 @@ function queue2(){
   
 
 var isAscending3 = 1;
-
+//sort function for column4
 function queue3(){
   isAscending3+=1;
   var table = document.getElementById("drug-table");
@@ -418,7 +435,7 @@ function queue3(){
       tbody.appendChild(row);
   });
 };
-
+//sort function for column5
 var isAscending4 = 1;
 
 function queue4(){
@@ -457,6 +474,47 @@ function queue4(){
   });
 };
 
+//sort function for column6
+var isAscending5 = 1;
+
+function queue5(){
+  isAscending5+=1;
+  var table = document.getElementById("drug-table");
+  if (!table) {
+      console.error("Table not found.");
+      return;
+  }
+
+  
+  var index = 5; 
+
+  
+  var rows = Array.from(table.rows);
+  rows.shift();
+
+ 
+  rows.sort(function(row1, row2) {
+      var value1 = row1.cells[index].textContent.trim();
+      var value2 = row2.cells[index].textContent.trim();
+      if(isAscending5%2 ===0){
+        
+        return value1.localeCompare(value2);
+      }
+      else{
+        return value2.localeCompare(value1);
+      }
+      
+  });
+
+  
+  var tbody = table.querySelector("tbody");
+  rows.forEach(function(row) {
+      tbody.appendChild(row);
+  });
+};
+
+
+//filter function
 function filter(index, element) {
 
   

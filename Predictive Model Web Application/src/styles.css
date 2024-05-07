@@ -222,7 +222,7 @@ body *{
     padding-bottom: 50px;
 }
 
-table{
+#drug-table{
     overflow-y: scroll;
     display: block;
     height: 500px;
