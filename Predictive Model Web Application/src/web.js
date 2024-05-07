@@ -85,6 +85,7 @@ function manualtButton(){
   visualLabel.textContent = "Prediction output Visualisation";
 }
 
+var uniqueValues1 = new Set();
 
 (function() {
   var DELIMITER = ',';
@@ -137,10 +138,16 @@ function manualtButton(){
       rows.forEach(function(row) {
           var trimmedRow = row.trim();
           if (trimmedRow) {
+              
               var cols = trimmedRow.split(DELIMITER);
               tableHTML += '<tr>';
-              cols.forEach(function(col) {
+              cols.forEach(function(col, index) {             
                   var trimmedCol = col.trim();
+
+                  if(index ==0){
+                    
+                    uniqueValues1.add(trimmedCol);
+                  }
                   tableHTML += '<td>' + trimmedCol + '</td>';
               });
               tableHTML += '</tr>';
@@ -149,7 +156,70 @@ function manualtButton(){
 
       tableHTML += '</tbody>';
       table.innerHTML = '<table id="drug-table">' + tableHTML + '</table>';
+      var arr1 = Array.from(uniqueValues1);
+      var jsonData = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "height": 1400,
+        "width": 2500,
+        "background": "white",
+        "data": {
+          "url": "https://raw.githubusercontent.com/Helenaaaxx/MDS6_FIT3164/main/Predictive%20Model%20Web%20Application/src/uploads/Drug_Breast_Cancer_Data.csv"
+        },
+        "mark": {"type": "bar", "cursor": "pointer"},
+        "transform": [
+          {"filter": "datum.COSMIC_ID == COSMIC_ID"}
+        ],
+        "encoding": {
+          "x": {
+            "field": "LN_IC50",
+            "type": "quantitative",
+            "title": "LN_IC50",
+            "axis": {
+              "titleFontSize": 18, 
+              "labelFontSize": 14}
+          },
+          "y": {
+            "field": "DRUG_NAME",
+            "type": "nominal",
+            "title": "Drug Name",
+            "sort": "-x",
+            "axis": {"titleFontSize": 18, "labelFontSize": 11.5}
+          },
+          "tooltip": [
+            {"field": "DRUG_NAME", "type": "nominal"},
+            {"field": "DRUG_ID", "type": "nominal"},
+            {"field": "CCLE_Name", "type": "nominal"},
+            {"field": "COSMIC_ID", "type": "nominal"},
+            {"field": "LN_IC50", "type": "quantitative", "format": ".2f"}
+          ]
+        },
+        "params": [
+          {
+            "name": "COSMIC_ID",
+            "value": 909907,
+            "bind": {
+              "input": "select",
+              "options": arr1,
+              "name": "Select Cosmic ID: "
+            }
+          }
+        ],
+        "config": {}
+      };
+      
+      
+      vegaEmbed('#bar_chart', jsonData, { "actions": false }).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+      }).catch(console.error);
+      
+      
+      
   }
+
+
+
+
+
 })();
 
 
@@ -566,7 +636,9 @@ document.getElementById("search"+index).addEventListener("keyup", function(event
 
 
 dropdown1.classList.toggle("show");
+ 
+}
+
 
 
  
-}
