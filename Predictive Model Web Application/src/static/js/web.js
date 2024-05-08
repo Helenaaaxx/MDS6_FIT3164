@@ -355,14 +355,17 @@ function createTable(path) {
       var rows = text.split(NEWLINE);
       var tableHTML = '<thead><tr>';
       var headers = rows.shift().trim().split(DELIMITER);
+      var cellname = '';
+      var Ic50 = '';
+
       headers.forEach(function(header, index) {
           var trimmedHeader = header.trim();
           if (trimmedHeader) {
             if (index === 0) {
-            
               tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn" onclick="queue()"> <i class="fa fa-sort"></i></button></th>';
           } else if(index === 1){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn1" onclick="queue1()"> <i class="fa fa-sort"></i></button></th>';
+            cellname = trimmedHeader;
           }
           else if(index === 2){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn2" onclick="queue2()"> <i class="fa fa-sort"></i></button></th>';
@@ -372,6 +375,7 @@ function createTable(path) {
           }
           else if(index === 4){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn4" onclick="queue4()"> <i class="fa fa-sort"></i></button></th>';
+            Ic50 = trimmedHeader;
           }
           else if(index === headers.length - 1){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn5" onclick="queue5()"> <i class="fa fa-sort"></i></button></th>';
@@ -400,6 +404,7 @@ function createTable(path) {
           }
       });
 
+      console.log(Ic50)
       tableHTML += '</tbody>';
       table.innerHTML = '<table id="drug-table">' + tableHTML + '</table>';
       var arr1 = Array.from(uniqueValues1);
@@ -416,7 +421,7 @@ function createTable(path) {
         ],
         "encoding": {
           "x": {
-            "field": "LN_IC50",
+            "field": Ic50,
             "type": "quantitative",
             "title": "LN_IC50",
             "axis": {
@@ -431,7 +436,7 @@ function createTable(path) {
             "axis": {"titleFontSize": 18, "labelFontSize": 14}
           },
           "color": {
-            "field": "LN_IC50",
+            "field": Ic50,
             "type": "quantitative",
             "scale": {
               "domain": [null, 3.77],
@@ -453,9 +458,9 @@ function createTable(path) {
           "tooltip": [
             {"field": "DRUG_NAME", "type": "nominal"},
             {"field": "DRUG_ID", "type": "nominal"},
-            {"field": "CCLE_Name", "type": "nominal"},
+            {"field": cellname, "type": "nominal"},
             {"field": "COSMIC_ID", "type": "nominal"},
-            {"field": "LN_IC50", "type": "quantitative", "format": ".2f"},
+            {"field": Ic50, "type": "quantitative", "format": ".2f"},
             {"field": "Resistance_Cut-Off", "type": "nominal", "title": "Resistance"}
           ]
         },
