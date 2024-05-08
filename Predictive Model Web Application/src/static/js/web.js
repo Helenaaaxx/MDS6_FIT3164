@@ -405,7 +405,6 @@ function createTable(path) {
       var arr1 = Array.from(uniqueValues1);
       var jsonData = {
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-        "height": 1400,
         "width": 2200,
         "background": "white",
         "data": {
@@ -425,11 +424,11 @@ function createTable(path) {
               "labelFontSize": 14}
           },
           "y": {
-            "field": "DRUG_NAME",
+            "field": "DRUG_ID",
             "type": "nominal",
-            "title": "Drug Name",
+            "title": "Drug ID",
             "sort": "x",
-            "axis": {"titleFontSize": 18, "labelFontSize": 13}
+            "axis": {"titleFontSize": 18, "labelFontSize": 14}
           },
           "color": {
             "field": "LN_IC50",
@@ -446,7 +445,7 @@ function createTable(path) {
           //   "scale": null, // Disable scale
           //   "title": "LN_IC50",
           //   "condition": {
-          //     "test": "datum.LN_IC50 <= 3.77", // Corrected condition
+          //     "test": "datum.LN_IC50 <= 3.77",
           //     "value": "orange"
           //   },
           //   "else": {"value": "gray"}
@@ -456,7 +455,8 @@ function createTable(path) {
             {"field": "DRUG_ID", "type": "nominal"},
             {"field": "CCLE_Name", "type": "nominal"},
             {"field": "COSMIC_ID", "type": "nominal"},
-            {"field": "LN_IC50", "type": "quantitative", "format": ".2f"}
+            {"field": "LN_IC50", "type": "quantitative", "format": ".2f"},
+            {"field": "Resistance_Cut-Off", "type": "nominal", "title": "Resistance"}
           ]
         },
         "params": [
