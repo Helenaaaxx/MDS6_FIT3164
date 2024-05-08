@@ -89,7 +89,7 @@ function manualtButton(){
   var table = document.getElementById('table-container');
   var visual = document.getElementById('bar_chart');
 
-  let uploadedFileNameDisplay = document.getElementById("uploadedFileName");
+  
 
   // fileUploadSec.innerHTML = '<div class="drop-area">'+'<p class="file-upload-instructions">'+'<img src= images/upload_logo_url alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">'+
   // 'Drop and Upload Dataset in CSV file for Prediction</p>'+'<input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple hidden>'+
@@ -99,7 +99,7 @@ function manualtButton(){
   fileUploadSec.innerHTML = `
         <div class="drop-area">
             <p class="file-upload-instructions">
-                <img src="images/upload-logo.png" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">
+                <img src="{{ url_for('static', filename='images/upload-logo.png') }}" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">
                 Drop and Upload Dataset in CSV file for Prediction
             </p>
             <input type="file" id="fileInput" accept=".csv, .xlsx, .xls" multiple hidden>
@@ -107,6 +107,8 @@ function manualtButton(){
             <p id="uploadedFileName"></p>
         </div>
     `;
+
+    let uploadedFileNameDisplay = document.getElementById("uploadedFileName");
 
   predictionSec.innerHTML = `
     <div id="predictionDiv">
@@ -176,11 +178,14 @@ function manualtButton(){
         })
         .then(response => response.json())
         .then(data => {
+          
             uploadedFileName.textContent = data.message;
+            console.log(uploadedFileName.textContent);
         })
         .catch(error => {
             uploadedFileName.textContent = 'Error uploading file: ' + error.message;
         });
+        
     }
 
   //   makePredictionButton.addEventListener('click', function () {

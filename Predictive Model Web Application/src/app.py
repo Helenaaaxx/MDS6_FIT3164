@@ -6,19 +6,19 @@ from model.model import run_model
 import os
 
 app = Flask(__name__)
-UPLOAD_FOLDER = 'C:/Users/Ali Azhar/Documents/DRUGRESFINAL/MDS6_FIT3164/Predictive Model Web Application/src/uploads'
+UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-IMAGE_FOLDER = 'C:/Users/Ali Azhar/Documents/DRUGRESFINAL/MDS6_FIT3164/Predictive Model Web Application/src/static'
+IMAGE_FOLDER = 'static/images'
 app.config['IMAGE_FOLDER'] = IMAGE_FOLDER
 
-USER_FOLDER = 'C:/Users/Ali Azhar/Documents/DRUGRESFINAL/MDS6_FIT3164/Predictive Model Web Application/src/user_file'
+USER_FOLDER = 'user_file'
 app.config['USER_FOLDER'] = USER_FOLDER
 
-MODEL_FOLDER = 'C:/Users/Ali Azhar/Documents/DRUGRESFINAL/MDS6_FIT3164/Predictive Model Web Application/src/uploads/PREDICTION.h5'
+MODEL_FOLDER = 'uploads/PREDICTION.h5'
 app.config['MODEL_FOLDER'] = MODEL_FOLDER
 
-RESULT_FOLDER = 'C:/Users/Ali Azhar/Documents/DRUGRESFINAL/MDS6_FIT3164/Predictive Model Web Application/src/result'
+RESULT_FOLDER = 'result'
 app.config['RESULT_FOLDER'] = RESULT_FOLDER
 
 # Define the folders
