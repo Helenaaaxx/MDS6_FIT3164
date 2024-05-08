@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
   <!-- CSS file -->
-  <link rel="stylesheet" href="/Predictive Model Web Application/src/static/css/styles.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
   <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
@@ -27,8 +27,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 
+  <script>
+    // Create a global JavaScript variable containing the URL for the default dataset
+    var defaultDatasetUrl = "{{ url_for('uploaded_file', filename='Drug_Breast_Cancer_Data_Display.csv') }}";
+    var upload_logo_url = "{{ url_for('uploaded_image', filename='upload-logo.png') }}";
+  </script>
+
+ 
 </head>
-<body onload="createTable('/Predictive Model Web Application/src/uploads/Drug_Breast_Cancer_Data_Display.csv')">
+
+<body onload="createTable(defaultDatasetUrl)">
   <!-- <header class="header">
     
     <h1>DRUGRES</h1>
@@ -54,7 +62,7 @@
         <p>This website is a tool where you can drag and drop your datasets on drugs and cancer cell lines in order to make prediction on the drug resistance on the cancer cell lines.</p>
       </div>
       <div id="cancerPosition">
-        <img src="/Predictive Model Web Application/src/static/images/red_cancer.png" alt="cancer-cell">
+        <img src="{{ url_for('static', filename='images/red_cancer.png') }}" alt="cancer-cell">
       </div>
       </div>
     </section>
@@ -135,24 +143,7 @@
 
       <div id="table-container">
         <table id="drug-table">
-          <thead>
-            <tr>
-              {% if data %}
-                {% for header in data[0] %}
-                  <th>{{ header }}</th>
-                {% endfor %}
-              {% endif %}
-            </tr>
-          </thead>
-          <tbody>
-            {% for row in data[1:] %}
-              <tr>
-                {% for cell in row %}
-                  <td>{{ cell }}</td>
-                {% endfor %}
-              </tr>
-            {% endfor %}
-          </tbody>
+          
         </table>
       </div>
       
@@ -185,7 +176,7 @@
       </p> 
   </footer>
 
-  <script src="/Predictive Model Web Application/src/web.js"></script>
+  <script src="{{ url_for('static', filename='js/web.js') }}"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
     $(document).ready(function(){
