@@ -432,7 +432,12 @@ function createTable(path) {
             "field": "DRUG_ID",
             "type": "nominal",
             "title": "Drug ID",
-            "sort": "x",
+            // "sort": "x",
+            "sort": {
+              "op": "mean",
+              "field": Ic50,
+              "order": "ascending"
+            },
             "axis": {"titleFontSize": 18, "labelFontSize": 14}
           },
           "color": {
