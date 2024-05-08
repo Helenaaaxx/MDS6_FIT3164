@@ -440,12 +440,32 @@ function createTable(path) {
             },
             "axis": {"titleFontSize": 18, "labelFontSize": 14}
           },
+          // "color": {
+          //   "field": Ic50,
+          //   "type": "quantitative",
+          //   "scale": {
+          //     "domain": [null, 3.77],
+          //     "range": ["orange", "#9D9A9A"]
+          //   },
+          //   "title": "LN_IC50"
+          // },
+          // "color": {
+          //   "field": Ic50,
+          //   "type": "quantitative",
+          //   "scale": null, // Disable scale
+          //   "title": "LN_IC50",
+          //   "condition": [
+          //     {"test": {"field": Ic50, "lte": 3.77}, "value": "orange"}, // If Ic50 <= 3.77, set color to orange
+          //     {"value": "gray"} // Otherwise, set color to gray
+          //   ]
+          // },
           "color": {
             "field": Ic50,
             "type": "quantitative",
             "scale": {
               "domain": [null, 3.77],
-              "range": ["orange", "#9D9A9A"]
+              "range": ["orange", "gray"],
+              "clamp": true // Clamp values outside the domain to the range
             },
             "title": "LN_IC50"
           },
