@@ -353,21 +353,21 @@ function createTable(path) {
           return;
       }
 
-      var ccle = '';
-      var lc50='';
+     
       var rows = text.split(NEWLINE);
       var tableHTML = '<thead><tr>';
       var headers = rows.shift().trim().split(DELIMITER);
+      var cellname = '';
+      var Ic50 = '';
+
       headers.forEach(function(header, index) {
           var trimmedHeader = header.trim();
           if (trimmedHeader) {
             if (index === 0) {
-            
               tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn" onclick="queue()"> <i class="fa fa-sort"></i></button></th>';
           } else if(index === 1){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn1" onclick="queue1()"> <i class="fa fa-sort"></i></button></th>';
-            ccle = trimmedHeader;
-            
+            cellname = trimmedHeader;
           }
           else if(index === 2){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn2" onclick="queue2()"> <i class="fa fa-sort"></i></button></th>';
@@ -377,7 +377,7 @@ function createTable(path) {
           }
           else if(index === 4){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn4" onclick="queue4()"> <i class="fa fa-sort"></i></button></th>';
-            lc50 = trimmedHeader;
+            Ic50 = trimmedHeader;
           }
           else if(index === headers.length - 1){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn5" onclick="queue5()"> <i class="fa fa-sort"></i></button></th>';
@@ -406,13 +406,12 @@ function createTable(path) {
           }
       });
 
-      console.log(lc50);
+      console.log(Ic50)
       tableHTML += '</tbody>';
       table.innerHTML = '<table id="drug-table">' + tableHTML + '</table>';
       var arr1 = Array.from(uniqueValues1);
       var jsonData = {
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-        "height": 1400,
         "width": 2200,
         "background": "white",
         "data": {
@@ -424,7 +423,7 @@ function createTable(path) {
         ],
         "encoding": {
           "x": {
-            "field": lc50,
+            "field": Ic50,
             "type": "quantitative",
             "title": "LN_IC50",
             "axis": {
@@ -435,15 +434,40 @@ function createTable(path) {
             "field": "DRUG_ID",
             "type": "nominal",
             "title": "Drug ID",
-            "sort": "x",
-            "axis": {"titleFontSize": 18, "labelFontSize": 13}
+            // "sort": "x",
+            "sort": {
+              "op": "mean",
+              "field": Ic50,
+              "order": "ascending"
+            },
+            "axis": {"titleFontSize": 18, "labelFontSize": 14}
           },
+          // "color": {
+          //   "field": Ic50,
+          //   "type": "quantitative",
+          //   "scale": {
+          //     "domain": [null, 3.77],
+          //     "range": ["orange", "#9D9A9A"]
+          //   },
+          //   "title": "LN_IC50"
+          // },
+          // "color": {
+          //   "field": Ic50,
+          //   "type": "quantitative",
+          //   "scale": null, // Disable scale
+          //   "title": "LN_IC50",
+          //   "condition": [
+          //     {"test": {"field": Ic50, "lte": 3.77}, "value": "orange"}, // If Ic50 <= 3.77, set color to orange
+          //     {"value": "gray"} // Otherwise, set color to gray
+          //   ]
+          // },
           "color": {
-            "field": lc50,
+            "field": Ic50,
             "type": "quantitative",
             "scale": {
               "domain": [null, 3.77],
-              "range": ["orange", "#9D9A9A"]
+              "range": ["orange", "gray"],
+              "clamp": true // Clamp values outside the domain to the range
             },
             "title": "LN_IC50"
           },
@@ -453,7 +477,7 @@ function createTable(path) {
           //   "scale": null, // Disable scale
           //   "title": "LN_IC50",
           //   "condition": {
-          //     "test": "datum.LN_IC50 <= 3.77", // Corrected condition
+          //     "test": "datum.LN_IC50 <= 3.77",
           //     "value": "orange"
           //   },
           //   "else": {"value": "gray"}
@@ -461,9 +485,10 @@ function createTable(path) {
           "tooltip": [
             {"field": "DRUG_NAME", "type": "nominal"},
             {"field": "DRUG_ID", "type": "nominal"},
-            {"field": ccle, "type": "nominal"},
+            {"field": cellname, "type": "nominal"},
             {"field": "COSMIC_ID", "type": "nominal"},
-            {"field": lc50, "type": "quantitative", "format": ".2f"}
+            {"field": Ic50, "type": "quantitative", "format": ".2f"},
+            {"field": "Resistance_Cut-Off", "type": "nominal", "title": "Resistance"}
           ]
         },
         "params": [
