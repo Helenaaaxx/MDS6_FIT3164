@@ -70,10 +70,10 @@ def run_model(model, df_upload):
 
     # Create a DataFrame with the required columns
     prediction_df = pd.DataFrame({
-        'DRUG_ID': user_df_morgan.loc[X_test.index, 'DRUG_ID'],  # Retrieve 'DRUG_ID' using the index of the original DataFrame
-        'DRUG_NAME': user_df_morgan.loc[X_test.index, 'DRUG_NAME'],
         'COSMIC_ID': user_df_morgan.loc[X_test.index, 'COSMIC_ID'],
         'CELL_LINE_NAME': user_df_morgan.loc[X_test.index, 'CELL_LINE_NAME'],
+        'DRUG_ID': user_df_morgan.loc[X_test.index, 'DRUG_ID'],  # Retrieve 'DRUG_ID' using the index of the original DataFrame
+        'DRUG_NAME': user_df_morgan.loc[X_test.index, 'DRUG_NAME'],
         'PRED_LN_IC50': y_pred.flatten()  # Flatten the y_pred array to make it one-dimensional
     })
 
