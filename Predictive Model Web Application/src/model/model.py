@@ -15,8 +15,6 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error
 from scipy.stats import pearsonr
 from sklearn.metrics import r2_score
 
-
-
 def run_model(model, df_upload):
 
     user_df = pd.read_csv(df_upload)
@@ -61,14 +59,14 @@ def run_model(model, df_upload):
 
     X_test.columns = X_test.columns.astype(str)
 
+    # Standardize features by removing the mean and scaling to unit variance
+    scaler = StandardScaler()
+    X_test_scaled = scaler.fit_transform(X_test)
+
     model = tf.keras.models.load_model(model)
 
-    # Standardize features by removing the mean and scaling to unit variance
-    #scaler = StandardScaler()
-    #X_test_scaled = scaler.transform(X_test)
-
     # Predict on the test set
-    y_pred = model.predict(X_test)
+    y_pred = model.predict(X_test_scaled)
 
     # Create a DataFrame with the required columns
     prediction_df = pd.DataFrame({
