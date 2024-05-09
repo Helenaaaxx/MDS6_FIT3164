@@ -22,7 +22,7 @@ def run_model(model, df_upload):
     user_df = pd.read_csv(df_upload)
 
     #Remove unneccesary cols
-    to_drop = ['Unnamed: 0']
+    # to_drop = ['Unnamed: 0']
     # user_df.drop(to_drop, inplace=True, axis=1)
 
     arr = []
