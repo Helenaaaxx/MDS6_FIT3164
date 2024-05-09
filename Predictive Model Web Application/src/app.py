@@ -26,12 +26,12 @@ app.config['RESULT_FOLDER'] = RESULT_FOLDER
 # USER_FOLDER = 'user_file'
 # RESULT_FOLDER = 'result'
 # MODEL_PATH = os.path.join(UPLOAD_FOLDER, 'PREDICTION.h5')
-
+app.config['IMAGE_FOLDER'] = IMAGE_FOLDER
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['USER_FOLDER'] = USER_FOLDER
 app.config['RESULT_FOLDER'] = RESULT_FOLDER
 
-for folder in [UPLOAD_FOLDER, USER_FOLDER, RESULT_FOLDER]:
+for folder in [UPLOAD_FOLDER, USER_FOLDER, RESULT_FOLDER, IMAGE_FOLDER]:
     if not os.path.exists(folder):
         os.makedirs(folder)
 
@@ -65,6 +65,7 @@ def make_prediction():
     # Save the results to a CSV file
     result_filename = 'user_prediction_result.csv'
     result_path = os.path.join(app.config['RESULT_FOLDER'], result_filename)
+    prediction_df = prediction_df[['COSMIC_ID', 'CELL_LINE_NAME', 'DRUG_ID', 'DRUG_NAME', 'PRED_LN_IC50', 'Resistance_Cut-Off']]
     prediction_df.to_csv(result_path, index=False)
 
     return jsonify({'message': 'Prediction completed', 'result_filename': result_filename})
@@ -138,6 +139,8 @@ def home():
     #     data = [["Error", "File not found."]]
     
     return render_template('index.html')
+
+
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):

@@ -96,10 +96,11 @@ function manualtButton(){
   // '<button class="drop-box" onclick="document.getElementById("fileInput").click();">Browse File</button>'+'<p id="uploadedFileName"></p>'+'</div>';
   // predictionSec.innerHTML= ' <div id="predictionDiv">'+' <button id="makePredictionButton">Make Prediction</button>'+'</div>';
 
+  
   fileUploadSec.innerHTML = `
         <div class="drop-area">
             <p class="file-upload-instructions">
-                <img src="{{ url_for('static', filename='images/upload-logo.png') }}" alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">
+                <img src= ${upload_logo_url}  alt="logo" style="float:left;width:25px;height:25px;padding-right: 5px;">
                 Drop and Upload Dataset in CSV file for Prediction
             </p>
             <input type="file" id="fileInput" accept=".csv, .xlsx, .xls" multiple hidden>
@@ -352,6 +353,8 @@ function createTable(path) {
           return;
       }
 
+      var ccle = '';
+      var lc50='';
       var rows = text.split(NEWLINE);
       var tableHTML = '<thead><tr>';
       var headers = rows.shift().trim().split(DELIMITER);
@@ -363,6 +366,8 @@ function createTable(path) {
               tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn" onclick="queue()"> <i class="fa fa-sort"></i></button></th>';
           } else if(index === 1){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn1" onclick="queue1()"> <i class="fa fa-sort"></i></button></th>';
+            ccle = trimmedHeader;
+            
           }
           else if(index === 2){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn2" onclick="queue2()"> <i class="fa fa-sort"></i></button></th>';
@@ -372,6 +377,7 @@ function createTable(path) {
           }
           else if(index === 4){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn4" onclick="queue4()"> <i class="fa fa-sort"></i></button></th>';
+            lc50 = trimmedHeader;
           }
           else if(index === headers.length - 1){
             tableHTML += '<th>' + trimmedHeader + '<button id="sortBtn5" onclick="queue5()"> <i class="fa fa-sort"></i></button></th>';
@@ -400,6 +406,7 @@ function createTable(path) {
           }
       });
 
+      console.log(lc50);
       tableHTML += '</tbody>';
       table.innerHTML = '<table id="drug-table">' + tableHTML + '</table>';
       var arr1 = Array.from(uniqueValues1);
@@ -417,7 +424,7 @@ function createTable(path) {
         ],
         "encoding": {
           "x": {
-            "field": "LN_IC50",
+            "field": lc50,
             "type": "quantitative",
             "title": "LN_IC50",
             "axis": {
@@ -425,14 +432,14 @@ function createTable(path) {
               "labelFontSize": 14}
           },
           "y": {
-            "field": "DRUG_NAME",
+            "field": "DRUG_ID",
             "type": "nominal",
-            "title": "Drug Name",
+            "title": "Drug ID",
             "sort": "x",
             "axis": {"titleFontSize": 18, "labelFontSize": 13}
           },
           "color": {
-            "field": "LN_IC50",
+            "field": lc50,
             "type": "quantitative",
             "scale": {
               "domain": [null, 3.77],
@@ -454,9 +461,9 @@ function createTable(path) {
           "tooltip": [
             {"field": "DRUG_NAME", "type": "nominal"},
             {"field": "DRUG_ID", "type": "nominal"},
-            {"field": "CCLE_Name", "type": "nominal"},
+            {"field": ccle, "type": "nominal"},
             {"field": "COSMIC_ID", "type": "nominal"},
-            {"field": "LN_IC50", "type": "quantitative", "format": ".2f"}
+            {"field": lc50, "type": "quantitative", "format": ".2f"}
           ]
         },
         "params": [
@@ -753,7 +760,7 @@ function queue5(){
   });
 };
 
-
+var checkedValues =  new Set();
 //filter function
 function filter(index, element) {
 
@@ -775,7 +782,7 @@ function filter(index, element) {
   var allLabel = [];
 
 
-  var checkedValues =  new Set();
+  
   var rows = Array.from(table.rows);
 
   
@@ -838,7 +845,7 @@ function filter(index, element) {
         for(var k = 0; k<rows.length; k++){
 
           var row = rows[k];
-          if (checkedValues.has(row.cells[index].textContent.trim()) || k===0) {
+          if (checkedValues.has(row.cells[0].textContent.trim()) || k===0) {
             row.style.visibility  = "visible";
             row.style.display="table-row";
          }
