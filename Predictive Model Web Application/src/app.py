@@ -15,7 +15,7 @@ app.config['IMAGE_FOLDER'] = IMAGE_FOLDER
 USER_FOLDER = 'user_file'
 app.config['USER_FOLDER'] = USER_FOLDER
 
-MODEL_FOLDER = 'uploads/FINAL_DRUGRES_MODEL'
+MODEL_FOLDER = 'uploads/LATEST_PREDICTION.h5'
 app.config['MODEL_FOLDER'] = MODEL_FOLDER
 
 RESULT_FOLDER = 'result'
@@ -65,10 +65,45 @@ def make_prediction():
     # Save the results to a CSV file
     result_filename = 'user_prediction_result.csv'
     result_path = os.path.join(app.config['RESULT_FOLDER'], result_filename)
-    prediction_df = prediction_df[['COSMIC_ID', 'CELL_LINE_NAME', 'DRUG_ID', 'DRUG_NAME', 'PRED_LN_IC50', 'Resistance_Cut-Off']]
     prediction_df.to_csv(result_path, index=False)
 
     return jsonify({'message': 'Prediction completed', 'result_filename': result_filename})
+
+
+# @app.route('/predict', methods=['POST'])
+# def make_prediction():
+#     data = request.json
+#     print("Received JSON data:", data)  # Debugging information
+
+#     # Extract the filename and ensure it's a valid string
+#     uploaded_filename = data.get('uploaded_filename', '')
+#     if not uploaded_filename or not isinstance(uploaded_filename, str):
+#         print("Error: Invalid or missing filename.")
+#         return jsonify({'message': 'Invalid or missing filename'}), 400
+
+#     # Construct the path for the uploaded file
+#     csv_path = os.path.join(app.config['USER_FOLDER'], uploaded_filename)
+#     print("Constructed CSV path:", csv_path)  # Debugging information
+
+#     # Check if the file exists
+#     if not os.path.exists(csv_path):
+#         print("Error: File not found.")
+#         return jsonify({'message': 'File not found'}), 404
+
+#     # Run the model and handle exceptions gracefully
+#     try:
+#         prediction_df = run_model(MODEL_FOLDER, csv_path)
+#     except Exception as e:
+#         print(f"Error during model prediction: {e}")
+#         return jsonify({'message': 'Error during model prediction', 'details': str(e)}), 500
+
+#     # Save the results to a CSV file
+#     result_filename = 'user_prediction_result.csv'
+#     result_path = os.path.join(app.config['RESULT_FOLDER'], result_filename)
+#     prediction_df = prediction_df[['COSMIC_ID', 'CELL_LINE_NAME', 'DRUG_ID', 'DRUG_NAME', 'PRED_LN_IC50', 'Resistance_Cut-Off']]
+#     prediction_df.to_csv(result_path, index=False)
+
+#     return jsonify({'message': 'Prediction completed', 'result_filename': result_filename})
 
 
 # @app.route('/predict', methods=['POST'])
