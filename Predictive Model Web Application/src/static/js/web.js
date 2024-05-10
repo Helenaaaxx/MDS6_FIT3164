@@ -412,7 +412,13 @@ function createTable(path) {
       var arr1 = Array.from(uniqueValues1);
       var jsonData = {
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-        "width": 2200,
+        "title": {
+          "text": "Bar Chart of Drug Resistance on Different Breast Cancer Cell \n",
+          "align": "center",
+          "fontSize": 31,
+          "offset": 20
+        },
+        "width": 2600,
         "background": "white",
         "data": {
           "url": path
@@ -421,6 +427,14 @@ function createTable(path) {
         "transform": [
           {"filter": "datum.COSMIC_ID == COSMIC_ID"}
         ],
+        // "facet": {
+        //   "column": {
+        //     "header": {"labelAngle": 0},
+        //     "field": "COSMIC_ID",
+        //     "type": "nominal",
+        //     "header": {"labelAngle": 0}
+        //   }
+        // },
         "encoding": {
           "x": {
             "field": Ic50,
@@ -466,7 +480,7 @@ function createTable(path) {
             "type": "quantitative",
             "scale": {
               "domain": [null, 3.77],
-              "range": ["orange", "gray"],
+              "range": ["darkorange", "gray"],
               "clamp": true // Clamp values outside the domain to the range
             },
             "title": "LN_IC50"
@@ -507,6 +521,16 @@ function createTable(path) {
       
       vegaEmbed('#bar_chart', jsonData, { "actions": false }).then(function (result) {
         // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        var dropdownButton = document.querySelector('.vega-bindings');
+        if (dropdownButton) {
+          dropdownButton.style.position = 'absolute';
+          dropdownButton.style.top = '10px'; // Adjust as needed
+          dropdownButton.style.left = '10px'; // Adjust as needed
+          dropdownButton.style.position = 'absolute';
+    dropdownButton.style.top = '10px'; // Adjust as needed
+    dropdownButton.style.left = '10px'; // Adjust as needed
+    dropdownButton.style.padding = '10px'; // Add padding as needed
+        }
       }).catch(console.error);
       
   }
