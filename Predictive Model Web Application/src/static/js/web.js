@@ -785,10 +785,12 @@ function queue5(){
   });
 };
 
-var checkedValues =  new Set();
+
+var checkedValues = [[],[],[],[]];
+var checkedIndex = [];
 //filter function
 function filter(index, element) {
-
+  
   
 
   var dropdown1 = element;
@@ -854,33 +856,76 @@ function filter(index, element) {
       
       // Call a function when the checkbox is checked
       if (event.target.checked) {
-        checkedValues.add(event.target.value);
+        if(!checkedValues[index].includes(event.target.value)){
+          checkedValues[index].push(event.target.value);
+          
+          
+        }
         if(document.getElementById("uncheckAll"+index).checked===true){
           document.getElementById("uncheckAll"+index).checked = false;
         }
       } else {
-        checkedValues.delete(event.target.value);
+        var num = checkedValues[index].indexOf(event.target.value);
+        if(checkedValues[index].length===1){
+          checkedValues[index].pop();
+         
+        }
+        else{
+          checkedValues[index].splice(num, 1);
+          console.log(checkedValues);
+          console.log('delete');
+        
+        }
+      
+
         if(document.getElementById("checkAll"+index).checked===true){
           document.getElementById("checkAll"+index).checked = false;
         }
           
       }
 
-      if(checkedValues.size>0){
+      if(checkedValues[0].length>0 || checkedValues[1].length>0 ||checkedValues[2].length>0 ||checkedValues[3].length>0){
+        console.log(checkedValues);
+        console.log('check');
         for(var k = 0; k<rows.length; k++){
 
+          
           var row = rows[k];
-          if (checkedValues.has(row.cells[0].textContent.trim()) || k===0) {
-            row.style.visibility  = "visible";
-            row.style.display="table-row";
-         }
-         else{
+          var bool = false;
+          var bool1 = false;
+          var bool2=false;
+          var bool3=false;
+          if (checkedValues[0].length===0 || checkedValues[0].includes(row.cells[0].textContent.trim())){
+            bool = true
+          }
+          if (checkedValues[1].length===0 || checkedValues[1].includes(row.cells[1].textContent.trim())){
+            bool1 = true
+          }
+          if (checkedValues[2].length===0 || checkedValues[2].includes(row.cells[2].textContent.trim())){
+            bool2 = true
+          }
+          if (checkedValues[3].length===0 || checkedValues[3].includes(row.cells[3].textContent.trim())){
+            bool3 = true
+          }
+          
+
+            if ((bool && bool1 && bool2&&bool3) || k===0) {
+             
+                row.style.visibility  = "visible";
+                row.style.display="table-row";
+              
+           }
+           else{
+           
               row.style.visibility  = "hidden";
-             row.style.display = "none";
-         }
-        }
-      }
+              row.style.display = "none";
+           }
+          
+          }
+      
+    }
       else{
+        
           rows.forEach(function(row) { 
        
            row.style.visibility  = "visible";
@@ -905,7 +950,7 @@ function filter(index, element) {
         allcheckBox.forEach(function(box){
 
           box.checked =true;
-          checkedValues.add(box.value);
+          checkedValues[index].push(box.value);
           var changeEvent = new Event("change");
           box.dispatchEvent(changeEvent);
     
@@ -920,8 +965,17 @@ function filter(index, element) {
       allcheckBox.forEach(function(box){
 
         box.checked =false;
-        if(checkedValues.has(box.value)){
-          checkedValues.delete(box.value);
+        if(checkedValues[index].includes(box.value)){
+          var num1= checkedValues[index].indexOf(box.value);
+          if(checkedValues[index].length==1){
+            
+            
+          }
+          else{
+            checkedValues[index].splice(num1, 1);
+         
+          }
+          
         }
         var changeEvent = new Event("change");
         box.dispatchEvent(changeEvent);
