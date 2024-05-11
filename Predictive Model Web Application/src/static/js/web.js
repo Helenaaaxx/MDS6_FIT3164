@@ -418,7 +418,8 @@ function createTable(path) {
           "fontSize": 31,
           "offset": 20
         },
-        "width": 2600,
+        "width": "container",
+        // "width": 2600,
         "background": "white",
         "data": {
           "url": path
