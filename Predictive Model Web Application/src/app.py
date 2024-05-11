@@ -1,9 +1,12 @@
-from flask import Flask, render_template, send_from_directory, jsonify, request 
+from flask import Flask, session, render_template, send_from_directory, jsonify, request 
+from flask_session import Session
 from werkzeug.utils import secure_filename
 import csv
 import pandas as pd
 from model.model import run_model
 import os
+from datetime import datetime, timedelta
+import datetime
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
@@ -26,6 +29,12 @@ app.config['HTML_FOLDER'] = HTML_FOLDER
 
 NEW_STATIC_FOLDER = 'static'
 app.config['NEW_STATIC_FOLDER'] = NEW_STATIC_FOLDER
+
+app.secret_key = 'your_secret_key_here'  # Change to a strong secret key
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
+
+Session(app)
 
 # Define the folders
 # UPLOAD_FOLDER = 'uploads'
@@ -51,9 +60,11 @@ def make_prediction():
     if not uploaded_filename or not isinstance(uploaded_filename, str):
         print("Error: Invalid or missing filename.")
         return jsonify({'message': 'Invalid or missing filename'}), 400
+    
+    filename = session['uploaded_filename']
 
     # Construct the path for the uploaded file
-    csv_path = os.path.join(app.config['USER_FOLDER'], uploaded_filename)
+    csv_path = os.path.join(app.config['USER_FOLDER'], filename)
     print("Constructed CSV path:", csv_path)  # Debugging information
 
     # Check if the file exists
@@ -64,16 +75,24 @@ def make_prediction():
     # Run the model and handle exceptions gracefully
     try:
         prediction_df = run_model(MODEL_FOLDER, csv_path)
+        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")  # Correctly access datetime class
+        result_filename = f'user_prediction_result_{timestamp}.csv'
+        result_path = os.path.join(app.config['RESULT_FOLDER'], result_filename)
+        prediction_df.to_csv(result_path, index=False)
+        return jsonify({'message': 'Prediction completed', 'result_filename': result_filename})
     except Exception as e:
         print(f"Error during model prediction: {e}")
         return jsonify({'message': 'Error during model prediction', 'details': str(e)}), 500
 
     # Save the results to a CSV file
-    result_filename = 'user_prediction_result.csv'
-    result_path = os.path.join(app.config['RESULT_FOLDER'], result_filename)
-    prediction_df.to_csv(result_path, index=False)
+    # result_filename = 'user_prediction_result.csv'
+    # result_path = os.path.join(app.config['RESULT_FOLDER'], result_filename)
+    # prediction_df.to_csv(result_path, index=False)
 
-    return jsonify({'message': 'Prediction completed', 'result_filename': result_filename})
+    # Generate a unique result filename using timestamp
+    
+
+    # return jsonify({'message': 'Prediction completed', 'result_filename': result_filename})
 
 
 # @app.route('/predict', methods=['POST'])
@@ -218,6 +237,9 @@ def upload_file():
     filename = os.path.basename(filename)
     file_path = os.path.join(app.config['USER_FOLDER'], filename)
     file.save(file_path)
+
+     # Save the filename in the user's session
+    session['uploaded_filename'] = filename
 
     return jsonify({'message': f'Uploaded file: {filename}', 'filename': filename})
 
