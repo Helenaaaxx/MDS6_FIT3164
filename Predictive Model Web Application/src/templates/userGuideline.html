@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   
   <!-- CSS file -->
-  <link rel="stylesheet" href="/Predictive Model Web Application/src/static/css/userGuideStyle.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/userGuideStyle.css') }}">
 
   <!-- Import pure.css -->
   <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
@@ -97,7 +97,7 @@
               <li>        
                 The uploaded dataset should strictly adhere to the provided format. Below is a sample dataset for reference and users can download the sample dataset to serve as the template of the user upload data.
                 <div class="linkDiv">
-                  <a href="/Predictive Model Web Application/src/uploads/sample_user_data.csv"  id="downloadSample"><button onclick="download()">Download sample template</button></a>
+                  <a href="{{ url_for('uploaded_file', filename='sample_user_data.csv') }}"  id="downloadSample"><button onclick="download()">Download sample template</button></a>
                 </div> 
               </li>
 
@@ -236,6 +236,6 @@
 
  
 
-  <script src="/Predictive Model Web Application/src/web.js"></script>
+  <script src="{{ url_for('static', filename='js/web.js') }}"></script>
 </body>
 </html>
