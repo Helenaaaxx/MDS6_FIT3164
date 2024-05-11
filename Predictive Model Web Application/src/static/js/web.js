@@ -357,7 +357,26 @@ makePredictionButton.addEventListener('click', function () {
   });
 });
 
+clearPredictionButton.addEventListener('click', function() {
+  // Clear UI components
+  predictionStatus.textContent = '';
+  uploadedFileNameDisplay.textContent = '';
+  createTable(defaultDatasetUrl);  // Reset the table to default view
 
+  // Call Flask route to clear server data
+  fetch('/clear-data', {
+      method: 'POST'
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log(data.message);  // Log success message from server
+  })
+  .catch(error => {
+      console.error('Failed to clear server data:', error);
+  });
+
+  console.log('Cleared prediction details and reset UI components.');
+});
 
 
 
