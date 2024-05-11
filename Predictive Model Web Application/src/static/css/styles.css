@@ -33,46 +33,71 @@ main{
     margin-top:-20px;
   }
 
-#first-part{
-    display: flex;
-    justify-content: center;
-}
+#first-part {
+    background-image: url('background_2.jpg'); /* Set your background image path */
+    background-size: cover;
+    background-position: center;
+    padding: 10px; /* Adjust padding as needed */
+    height: 260px;
+  }
 
+#inner-container {
+    background-color: rgba(255, 255, 255, 0.75); /* White with 50% transparency */
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 30px; /* Padding at top, bottom, left, and right */
+    padding-top: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+  
 #first-inner{
     display: flex;
     justify-content: space-between;
     width: 90%;
 }
 
+.first-sentence,
+.second-sentence {
+  font-size: 24px; /* Increase font size */
+  text-align: center; /* Center-align the text */
+}
+
 #left-part{
-    width: 40%;
+    width: 100%;
+    text-align: center;
   }
 
 #userGuidelineBtnDiv{
     margin-left: 25%;
     width: 50%;
-    display: flex;
+    /* display: flex;
     justify-content: space-around;
-    cursor: "pointer";
+    cursor: "pointer"; */
 }
 
 .firstBtn{
     background-color: gray;
     color: white;
-    border-radius: 10px;
+    border-radius: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 15px;
     padding-right: 15px;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
 
 }
 
 #left-part p{
-    font-size: 18px;
-    font-weight: 700
+    font-size: 20px;
+    font-weight: 750
 }
  
 #second-part p{
@@ -239,6 +264,14 @@ main{
     border-radius: 10px;
     cursor: pointer;
 }
+
+/* Custom CSS to position the dropdown menu */
+.vega-bindings {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    left: 10px; /* Adjust as needed */
+    bottom: 1000px;
+  }
 
 #filterLabel{
     font-size: 20px;

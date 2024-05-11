@@ -412,7 +412,13 @@ function createTable(path) {
       var arr1 = Array.from(uniqueValues1);
       var jsonData = {
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-        "width": 2200,
+        "title": {
+          "text": "Bar Chart of Drug Resistance on Different Breast Cancer Cell \n",
+          "align": "center",
+          "fontSize": 31,
+          "offset": 20
+        },
+        "width": 2600,
         "background": "white",
         "data": {
           "url": path
@@ -421,6 +427,14 @@ function createTable(path) {
         "transform": [
           {"filter": "datum.COSMIC_ID == COSMIC_ID"}
         ],
+        // "facet": {
+        //   "column": {
+        //     "header": {"labelAngle": 0},
+        //     "field": "COSMIC_ID",
+        //     "type": "nominal",
+        //     "header": {"labelAngle": 0}
+        //   }
+        // },
         "encoding": {
           "x": {
             "field": Ic50,
@@ -466,7 +480,7 @@ function createTable(path) {
             "type": "quantitative",
             "scale": {
               "domain": [null, 3.77],
-              "range": ["orange", "gray"],
+              "range": ["darkorange", "gray"],
               "clamp": true // Clamp values outside the domain to the range
             },
             "title": "LN_IC50"
@@ -507,6 +521,16 @@ function createTable(path) {
       
       vegaEmbed('#bar_chart', jsonData, { "actions": false }).then(function (result) {
         // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        var dropdownButton = document.querySelector('.vega-bindings');
+        if (dropdownButton) {
+          dropdownButton.style.position = 'absolute';
+          dropdownButton.style.top = '10px'; // Adjust as needed
+          dropdownButton.style.left = '10px'; // Adjust as needed
+          dropdownButton.style.position = 'absolute';
+    dropdownButton.style.top = '10px'; // Adjust as needed
+    dropdownButton.style.left = '10px'; // Adjust as needed
+    dropdownButton.style.padding = '10px'; // Add padding as needed
+        }
       }).catch(console.error);
       
   }
@@ -785,7 +809,9 @@ function queue5(){
   });
 };
 
-var checkedValues =  new Set();
+
+var checkedValues = [[],[],[],[]];
+var checkedIndex = [];
 //filter function
 function filter(index, element) {
 
@@ -854,33 +880,76 @@ function filter(index, element) {
       
       // Call a function when the checkbox is checked
       if (event.target.checked) {
-        checkedValues.add(event.target.value);
+        if(!checkedValues[index].includes(event.target.value)){
+          checkedValues[index].push(event.target.value);
+          
+          
+        }
         if(document.getElementById("uncheckAll"+index).checked===true){
           document.getElementById("uncheckAll"+index).checked = false;
         }
       } else {
-        checkedValues.delete(event.target.value);
+        var num = checkedValues[index].indexOf(event.target.value);
+        if(checkedValues[index].length===1){
+          checkedValues[index].pop();
+         
+        }
+        else{
+          checkedValues[index].splice(num, 1);
+          console.log(checkedValues);
+          console.log('delete');
+        
+        }
+      
+
         if(document.getElementById("checkAll"+index).checked===true){
           document.getElementById("checkAll"+index).checked = false;
         }
           
       }
 
-      if(checkedValues.size>0){
+      if(checkedValues[0].length>0 || checkedValues[1].length>0 ||checkedValues[2].length>0 ||checkedValues[3].length>0){
+        console.log(checkedValues);
+        console.log('check');
         for(var k = 0; k<rows.length; k++){
 
+          
           var row = rows[k];
-          if (checkedValues.has(row.cells[0].textContent.trim()) || k===0) {
+          var bool = false;
+          var bool1 = false;
+          var bool2=false;
+          var bool3=false;
+          if (checkedValues[0].length===0 || checkedValues[0].includes(row.cells[0].textContent.trim())){
+            bool = true
+          }
+          if (checkedValues[1].length===0 || checkedValues[1].includes(row.cells[1].textContent.trim())){
+            bool1 = true
+          }
+          if (checkedValues[2].length===0 || checkedValues[2].includes(row.cells[2].textContent.trim())){
+            bool2 = true
+          }
+          if (checkedValues[3].length===0 || checkedValues[3].includes(row.cells[3].textContent.trim())){
+            bool3 = true
+          }
+          
+
+            if ((bool && bool1 && bool2&&bool3) || k===0) {
+             
             row.style.visibility  = "visible";
             row.style.display="table-row";
+              
          }
          else{
+           
               row.style.visibility  = "hidden";
              row.style.display = "none";
          }
+          
         }
+      
       }
       else{
+        
           rows.forEach(function(row) { 
        
            row.style.visibility  = "visible";
@@ -905,7 +974,7 @@ function filter(index, element) {
         allcheckBox.forEach(function(box){
 
           box.checked =true;
-          checkedValues.add(box.value);
+          checkedValues[index].push(box.value);
           var changeEvent = new Event("change");
           box.dispatchEvent(changeEvent);
     
@@ -920,8 +989,17 @@ function filter(index, element) {
       allcheckBox.forEach(function(box){
 
         box.checked =false;
-        if(checkedValues.has(box.value)){
-          checkedValues.delete(box.value);
+        if(checkedValues[index].includes(box.value)){
+          var num1= checkedValues[index].indexOf(box.value);
+          if(checkedValues[index].length==1){
+            
+            
+          }
+          else{
+            checkedValues[index].splice(num1, 1);
+         
+          }
+          
         }
         var changeEvent = new Event("change");
         box.dispatchEvent(changeEvent);
