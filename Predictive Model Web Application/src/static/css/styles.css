@@ -165,13 +165,14 @@ main{
     
 }
 
-#makePredictionButton{
+.predictionDivBtn{
     background-color: gray;
     color: white;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 15px;
     padding-right: 15px;
+    margin-left: 40px;
     font-size: 25px;
     font-weight: 700;
     text-align: center;

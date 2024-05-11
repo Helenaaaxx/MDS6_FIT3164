@@ -113,7 +113,8 @@ function manualtButton(){
 
   predictionSec.innerHTML = `
     <div id="predictionDiv">
-        <button id="makePredictionButton">Make Prediction</button>
+        <button id="makePredictionButton" class="predictionDivBtn">Make Prediction</button>
+        <button id="clearPredictionButton" class="predictionDivBtn">Clear Prediction</button>
         <p id="predictionStatus"></p>
     </div>
     `;
