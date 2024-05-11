@@ -67,43 +67,13 @@
       </div>
     </section> -->
 
-    <!-- <section id="first-part">
-      <div id="outer-container">
-        <div id="inner-container">
-          <div id="left-part">
-            <p>For understanding how to use our web application tool properly, please direct to the Manual User Guideline page by clicking the button below:</p>
-            <div id="userGuidelineBtnDiv">
-              <a href="{{ user_guideline_url }}"><button id="userGuidelineBtn" class="firstBtn">Manual User Guideline</button></a>
-              <button id="bulkPageBtn" class="firstBtn">Bulk Page</button>
-            </div>
-            <p>This website is a tool where you can drag and drop your datasets on drugs and cancer cell lines in order to make prediction on the drug resistance on the cancer cell lines.</p>
-          </div>
-          <div id="cancerPosition">
-            <img src="{{ url_for('static', filename='images/red_cancer.png') }}" alt="cancer-cell">
-          </div>
-        </div>
-      </div>
-    </section> -->
-
-    <!-- <section id="first-part">
-      <div id="inner-container">
-        <div id="left-part">
-          <p>This website serves as a platform where you can upload datasets pertaining to drug-cell interactions, encompassing both drugs and cancer cell lines, to predict drug resistance in the cancer cell lines.<br></p>
-          <p>To gain insight into the proper utilization of our web application tool, please navigate to the Manual User Guideline page by clicking the button provided below:</p>
-          <div id="userGuidelineBtnDiv">
-            <a href="{{ user_guideline_url }}"><button id="userGuidelineBtn" class="firstBtn">Manual User Guideline</button></a>
-          </div>
-        </div>
-      </div>
-    </section> -->
-
     <section id="first-part">
       <div id="inner-container">
         <div id="left-part">
           <p class="first-sentence">This website serves as a platform where you can upload datasets pertaining to drug-cell interactions, encompassing both drugs and cancer cell lines, to predict drug resistance in the cancer cell lines.</p>
           <p class="second-sentence">To gain insight into the proper utilization of our web application tool, please navigate to the Manual User Guideline page by clicking the button provided below:</p>
           <div id="userGuidelineBtnDiv">
-            <a href="{{ user_guideline_url }}"><button id="userGuidelineBtn" class="firstBtn">Manual User Guideline</button></a>
+            <a href="{{ url_for('user_guideline') }}"><button id="userGuidelineBtn" class="firstBtn">Manual User Guideline</button></a>
           </div>
         </div>
       </div>
