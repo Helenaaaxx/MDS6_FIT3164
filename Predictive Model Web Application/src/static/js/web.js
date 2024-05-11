@@ -1,4 +1,4 @@
-// let uploadedFileName = '';
+let uploadedFileName = '';
 
 document.addEventListener('DOMContentLoaded', () => {
   // const fileInput = document.getElementById('fileInput');
@@ -137,7 +137,7 @@ function manualtButton(){
         fileInput.click();
     });
 
-  //    // Handle file drop
+     // Handle file drop
   //    dropArea.addEventListener('drop', function (e) {
   //     var files = e.dataTransfer.files;
   //     e.preventDefault();
@@ -182,10 +182,18 @@ function manualtButton(){
     // Handle file drop
     dropArea.addEventListener('drop', function (e) {
       var files = e.dataTransfer.files;
-      e.preventDefault();
-      e.stopPropagation();
-      handleFiles(files);
-      uploadedFileName = files; 
+    e.preventDefault();
+    e.stopPropagation();
+    if (files.length > 0) {
+        const file = files[0];
+        uploadedFileName = file.name;
+        uploadedFileNameDisplay.textContent = `Uploaded File: ${uploadedFileName}`;  // Update display
+        handleFiles(files);  // Then call handleFiles
+    }
+    if (predictionMade) {
+      predictionStatus.textContent = '';
+    }
+
    });
 
     // Function to handle and upload files
