@@ -19,6 +19,9 @@ def run_model(model, df_upload):
 
     user_df = pd.read_csv(df_upload)
 
+    # Remove rows with any missing values
+    # user_df.dropna(inplace=True)
+
     #Remove unneccesary cols
     # to_drop = ['Unnamed: 0']
     # user_df.drop(to_drop, inplace=True, axis=1)
@@ -81,6 +84,8 @@ def run_model(model, df_upload):
 
     # Reset the index of the prediction DataFrame
     prediction_df.reset_index(drop=True, inplace=True)
+
+    prediction_df.dropna(inplace=True)
 
     print(prediction_df)
 
