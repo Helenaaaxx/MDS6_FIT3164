@@ -212,7 +212,10 @@ def upload_file():
     if file.filename == '':
         return jsonify({'message': 'No selected file'}), 400
 
-    filename = secure_filename(file.filename)
+    # filename = secure_filename(file.filename)
+    filename = file.filename
+    # Basic security check to remove path information
+    filename = os.path.basename(filename)
     file_path = os.path.join(app.config['USER_FOLDER'], filename)
     file.save(file_path)
 
