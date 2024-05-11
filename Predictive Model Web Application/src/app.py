@@ -7,6 +7,7 @@ from model.model import run_model
 import os
 from datetime import datetime, timedelta
 import datetime
+import shutil
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
@@ -296,6 +297,24 @@ def upload_file():
 # def download_result(filename):
 #     return send_from_directory(app.config['RESULT_FOLDER'], filename)
 
+@app.route('/clear', methods=['POST'])
+def clear_data():
+    folders = [app.config['USER_FOLDER'], app.config['RESULT_FOLDER']]
+    for folder in folders:
+        for filename in os.listdir(folder):
+            file_path = os.path.join(folder, filename)
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                return jsonify({'message': f'Failed to delete {filename}. Reason: {str(e)}'}), 500
+    
+    # Optional: Reset any relevant session data
+    session.pop('uploaded_filename', None)
+
+    return jsonify({'message': 'Data cleared successfully'})
 
 
 if __name__ == '__main__':
