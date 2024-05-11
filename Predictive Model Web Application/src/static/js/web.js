@@ -129,15 +129,27 @@ function manualtButton(){
     var fileInput = document.getElementById("fileInput");
     var browseButton = document.getElementById("browseButton");
     var dropArea = document.querySelector(".drop-area");
+    var predictionMade = false;
 
     // When the "Browse File" button is clicked, simulate a click on the hidden file input
     browseButton.addEventListener('click', function () {
         fileInput.click();
     });
 
+  //    // Handle file drop
+  //    dropArea.addEventListener('drop', function (e) {
+  //     var files = e.dataTransfer.files;
+  //     e.preventDefault();
+  //     e.stopPropagation();
+  //     handleFiles(files);
+  // });
+
     // Handle file selection via the file input
     fileInput.addEventListener('change', function () {
         handleFiles(this.files);
+        if (predictionMade) {
+          predictionStatus.textContent = '';
+      }
     });
 
     // Prevent default drag behaviors
@@ -160,11 +172,20 @@ function manualtButton(){
         dropArea.addEventListener(eventName, () => dropArea.classList.remove('highlight'), false);
     });
 
+    // // Handle file drop
+    // dropArea.addEventListener('drop', function (e) {
+    //     var files = e.dataTransfer.files;
+    //     fileInput.click();
+    // });
+
     // Handle file drop
     dropArea.addEventListener('drop', function (e) {
-        var files = e.dataTransfer.files;
-        handleFiles(files);
-    });
+      var files = e.dataTransfer.files;
+      e.preventDefault();
+      e.stopPropagation();
+      handleFiles(files);
+      uploadedFileName = files; 
+   });
 
     // Function to handle and upload files
     function handleFiles(files) {
@@ -264,7 +285,13 @@ fileInput.addEventListener('change', function () {
   } else {
       uploadedFileNameDisplay.textContent = "No file uploaded";
   }
+
+  if (predictionMade) {
+    predictionStatus.textContent = '';
+}
 });
+
+
 
 function uploadFile(file) {
   const formData = new FormData();
@@ -314,6 +341,7 @@ makePredictionButton.addEventListener('click', function () {
       } else {
           predictionStatus.textContent = "Error: No result file returned.";
       }
+      predictionMade = true;
   })
   .catch(error => {
       predictionStatus.textContent = 'Error during prediction: ' + error.message;
