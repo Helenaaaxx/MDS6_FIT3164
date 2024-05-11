@@ -814,7 +814,7 @@ var checkedValues = [[],[],[],[]];
 var checkedIndex = [];
 //filter function
 function filter(index, element) {
-
+  
   
 
   var dropdown1 = element;
@@ -935,19 +935,19 @@ function filter(index, element) {
 
             if ((bool && bool1 && bool2&&bool3) || k===0) {
              
-            row.style.visibility  = "visible";
-            row.style.display="table-row";
+                row.style.visibility  = "visible";
+                row.style.display="table-row";
               
-         }
-         else{
+           }
+           else{
            
               row.style.visibility  = "hidden";
-             row.style.display = "none";
-         }
+              row.style.display = "none";
+           }
           
-        }
+          }
       
-      }
+    }
       else{
         
           rows.forEach(function(row) { 
