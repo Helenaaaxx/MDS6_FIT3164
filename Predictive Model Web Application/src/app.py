@@ -21,6 +21,12 @@ app.config['MODEL_FOLDER'] = MODEL_FOLDER
 RESULT_FOLDER = 'result'
 app.config['RESULT_FOLDER'] = RESULT_FOLDER
 
+HTML_FOLDER = 'templates'
+app.config['HTML_FOLDER'] = HTML_FOLDER
+
+NEW_STATIC_FOLDER = 'static'
+app.config['NEW_STATIC_FOLDER'] = NEW_STATIC_FOLDER
+
 # Define the folders
 # UPLOAD_FOLDER = 'uploads'
 # USER_FOLDER = 'user_file'
@@ -175,6 +181,14 @@ def home():
     
     return render_template('index.html')
 
+@app.route('/userGuideline')
+def user_guideline():
+    return render_template('userGuideline.html')
+
+
+@app.route('/templates/<filename>')
+def templates(filename):
+    return send_from_directory(app.config['HTML_FOLDER'], filename)
 
 
 @app.route('/uploads/<filename>')
@@ -185,6 +199,10 @@ def uploaded_file(filename):
 def uploaded_image(filename):
     return send_from_directory(app.config['IMAGE_FOLDER'], filename)
 
+@app.route('/static/<filename>')
+def new_static(filename):
+    return send_from_directory(app.config['NEW_STATIC_FOLDER'], filename)
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -194,7 +212,10 @@ def upload_file():
     if file.filename == '':
         return jsonify({'message': 'No selected file'}), 400
 
-    filename = secure_filename(file.filename)
+    # filename = secure_filename(file.filename)
+    filename = file.filename
+    # Basic security check to remove path information
+    filename = os.path.basename(filename)
     file_path = os.path.join(app.config['USER_FOLDER'], filename)
     file.save(file_path)
 
