@@ -57,6 +57,10 @@ def run_model(model, df_upload):
     to_drop = ['isosmiles']
     user_df_morgan.drop(to_drop, inplace=True, axis=1)
 
+    # Define or load a sample structure for X_train columns. This can be a hardcoded list of expected columns based on the model's training.
+    # For example:
+    expected_columns = ['DRUG_NAME', 'CELL_LINE_NAME', 'DRUG_ID', 'COSMIC_ID']  
+
     # from user upload data
     X_test = user_df_morgan.drop(columns=['DRUG_NAME', 'CELL_LINE_NAME', 'DRUG_ID', 'COSMIC_ID'])
 
@@ -65,6 +69,11 @@ def run_model(model, df_upload):
     # Standardize features by removing the mean and scaling to unit variance
     scaler = StandardScaler()
     X_test_scaled = scaler.fit_transform(X_test)
+
+    # Ensure X_test columns match the expected training features
+    if not set(expected_columns).issubset(set(X_test.columns)):
+        # If columns do not match, return an error message
+        return None, "Incorrect Dimension: The uploaded data format does not align with the required format. Missing or extra columns detected."
 
     model = tf.keras.models.load_model(model)
 

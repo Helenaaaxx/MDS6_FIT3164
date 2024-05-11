@@ -76,6 +76,10 @@ def make_prediction():
     # Run the model and handle exceptions gracefully
     try:
         prediction_df = run_model(MODEL_FOLDER, csv_path)
+        # if prediction_df is None:
+        #     return jsonify({'error': prediction_df}), 400  # Return a bad request with the error message
+
+        # prediction_df = run_model(MODEL_FOLDER, csv_path)
         timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")  # Correctly access datetime class
         result_filename = f'user_prediction_result_{timestamp}.csv'
         result_path = os.path.join(app.config['RESULT_FOLDER'], result_filename)
@@ -83,7 +87,7 @@ def make_prediction():
         return jsonify({'message': 'Prediction completed', 'result_filename': result_filename})
     except Exception as e:
         print(f"Error during model prediction: {e}")
-        return jsonify({'message': 'Error during model prediction', 'details': str(e)}), 500
+        return jsonify({'message': 'Wrong Dimension, Please Input Correct Dimensional Data', 'details': str(e)}), 500
 
     # Save the results to a CSV file
     # result_filename = 'user_prediction_result.csv'
