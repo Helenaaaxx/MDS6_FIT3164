@@ -361,7 +361,7 @@ clearPredictionButton.addEventListener('click', function() {
   // Clear UI components
   predictionStatus.textContent = '';
   uploadedFileNameDisplay.textContent = '';
-  createTable(defaultDatasetUrl);  // Reset the table to default view
+  // createTable(defaultDatasetUrl);  // Reset the table to default view
 
   // Call Flask route to clear server data
   fetch('/clear-data', {

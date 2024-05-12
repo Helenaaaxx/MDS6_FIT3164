@@ -71,9 +71,9 @@ def run_model(model, df_upload):
     X_test_scaled = scaler.fit_transform(X_test)
 
     # Ensure X_test columns match the expected training features
-    if not set(expected_columns).issubset(set(X_test.columns)):
-        # If columns do not match, return an error message
-        return None, "Incorrect Dimension: The uploaded data format does not align with the required format. Missing or extra columns detected."
+    # if not set(expected_columns).issubset(set(X_test.columns)):
+    #     # If columns do not match, return an error message
+    #     return None, "Incorrect Dimension: The uploaded data format does not align with the required format. Missing or extra columns detected."
 
     model = tf.keras.models.load_model(model)
 
