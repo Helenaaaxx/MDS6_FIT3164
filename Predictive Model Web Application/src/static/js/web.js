@@ -69,8 +69,8 @@ function defaultButton(){
 
   fileUploadSec.innerHTML = '<div style="height:0px;">'+'</div>';
   predictionSec.innerHTML= '<div style="height:0px;">'+'</div>';
-  predictionLabel.textContent="Default GDSC-CCLE Drug-Cell line sensitivity dataset";
-  visualLabel.textContent = "Default GDSC-CCLE Drug-Cell Sensitivity Visualisation";
+  predictionLabel.textContent="Default GDSC-CCLE Drug-Cell line resistance dataset";
+  visualLabel.textContent = "Default GDSC-CCLE Drug-Cell Resistance Visualisation";
 
   // createTable('/Predictive Model Web Application/src/uploads/Drug_Breast_Cancer_Data_Display.csv');
 
@@ -113,9 +113,13 @@ function manualtButton(){
 
   predictionSec.innerHTML = `
     <div id="predictionDiv">
+        <div id="predictionBtnDiv">
         <button id="makePredictionButton" class="predictionDivBtn">Make Prediction</button>
         <button id="clearPredictionButton" class="predictionDivBtn">Clear Prediction</button>
+        </div>
+        <div>
         <p id="predictionStatus"></p>
+        </div>
     </div>
     `;
 
