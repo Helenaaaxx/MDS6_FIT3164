@@ -94,11 +94,20 @@ def run_model(model, df_upload):
     # Reset the index of the prediction DataFrame
     prediction_df.reset_index(drop=True, inplace=True)
 
+    initial_row_count = prediction_df.shape[0]
+
     prediction_df.dropna(inplace=True)
+
+    final_row_count = prediction_df.shape[0]
+    dropped = False
+    rows_dropped = initial_row_count - final_row_count
+    if rows_dropped > 0:
+        dropped  = True
+
 
     print(prediction_df)
 
-    return prediction_df
+    return dropped, prediction_df
 
 
 if __name__ == '__main__':

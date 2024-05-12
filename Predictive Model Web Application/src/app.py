@@ -75,7 +75,8 @@ def make_prediction():
 
     # Run the model and handle exceptions gracefully
     try:
-        prediction_df = run_model(MODEL_FOLDER, csv_path)
+        dropped, prediction_df = run_model(MODEL_FOLDER, csv_path)
+        
         # if prediction_df is None:
         #     return jsonify({'error': prediction_df}), 400  # Return a bad request with the error message
 
@@ -84,7 +85,10 @@ def make_prediction():
         result_filename = f'user_prediction_result_{timestamp}.csv'
         result_path = os.path.join(app.config['RESULT_FOLDER'], result_filename)
         prediction_df.to_csv(result_path, index=False)
-        return jsonify({'message': 'Prediction completed', 'result_filename': result_filename})
+        if dropped:
+            return jsonify({'message': 'Prediction completed, Rows with NA values have been dropped', 'result_filename': result_filename})
+        else:
+            return jsonify({'message': 'Prediction completed successfully', 'result_filename': result_filename})
     except Exception as e:
         print(f"Error during model prediction: {e}")
         return jsonify({'message': 'Wrong Dimension, Please Input Correct Dimensional Data', 'details': str(e)}), 500
