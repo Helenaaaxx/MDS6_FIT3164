@@ -622,7 +622,7 @@ exportBtn.addEventListener("click", function() {
  
   var link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "Drug_Breast_Cancer_Data.csv";
+  link.download = "LN_IC50.csv";
 
   
   link.click();
